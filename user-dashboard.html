@@ -136,28 +136,7 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
         .section-header h2 { font-size: 18px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 20px; }
-        .stat-card { background: var(--bg-card); padding: 14px 16px; border-radius: var(--radius); box-shadow: var(--shadow-sm); transition: var(--transition); border: 1px solid var(--border-color); }
-        .stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
-        .stat-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-bottom: 8px; }
-        .stat-info h4 { font-size: 11px; color: var(--gray-400); font-weight: 500; margin-bottom: 3px; }
-        .stat-info p { font-size: 17px; font-weight: 700; color: var(--text-primary); }
         .card { background: var(--bg-card); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 18px; margin-bottom: 18px; border: 1px solid var(--border-color); }
-        .table-container { background: var(--bg-card); border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; border: 1px solid var(--border-color); }
-        .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        .data-table th { background: var(--light); color: var(--gray-600); padding: 10px 12px; text-align: left; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.3px; border-bottom: 1px solid var(--border-color); }
-        .data-table td { padding: 10px 12px; border-bottom: 1px solid var(--border-color); }
-        .data-table tr:last-child td { border-bottom: none; }
-        .data-table tr:hover td { background: var(--hover-bg); }
-        .btn-action { padding: 5px; border: none; border-radius: 6px; cursor: pointer; transition: var(--transition); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; background: var(--light); color: var(--gray-600); margin-right: 4px; }
-        .btn-action:hover { background: var(--gray-200); color: var(--text-primary); }
-        .btn-delete { background: #fee2e2; color: #dc2626; }
-        .btn-print { background: #fef3c7; color: #b45309; }
-        .btn-pay { background: #d1fae5; color: #065f46; }
-        .form-group { margin-bottom: 14px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; color: var(--text-primary); font-size: 12px; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 13px; transition: var(--transition); background: var(--light); font-family: var(--font-primary); }
-        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--primary); background: var(--bg-card); box-shadow: 0 0 0 3px rgba(109,94,243,0.08); }
         .btn { padding: 9px 16px; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-primary); }
         .btn-primary { background: var(--primary); color: white; }
         .btn-primary:hover { background: var(--primary-dark); box-shadow: var(--shadow); }
@@ -167,25 +146,35 @@
         .badge-success { background: #d1fae5; color: #065f46; }
         .badge-warning { background: #fef3c7; color: #92400e; }
         .badge-danger { background: #fee2e2; color: #991b1b; }
+        .badge-info { background: #dbeafe; color: #1e40af; }
+
+        /* PROFESSIONAL LIST STYLES */
+        .list-grid { display: flex; flex-direction: column; gap: 10px; }
+        .list-item {
+            background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius);
+            padding: 14px 16px; display: flex; align-items: center; gap: 14px; transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+        .list-item:hover { box-shadow: var(--shadow); transform: translateY(-2px); border-color: #c7d2fe; }
+        .list-icon {
+            width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 20px; flex-shrink: 0;
+        }
+        .list-details { flex: 1; }
+        .list-title { font-weight: 700; font-size: 14px; color: var(--text-primary); }
+        .list-sub { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+        .list-amount { font-weight: 700; font-size: 15px; color: var(--text-primary); }
+        .list-actions { display: flex; gap: 6px; }
+        .btn-action { padding: 5px; border: none; border-radius: 6px; cursor: pointer; transition: var(--transition); width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; background: var(--light); color: var(--gray-600); }
+        .btn-action:hover { background: var(--gray-200); color: var(--text-primary); }
+        .btn-delete { background: #fee2e2; color: #dc2626; }
+        .btn-print { background: #fef3c7; color: #b45309; }
+
         .search-bar { display: flex; align-items: center; background: var(--light); border-radius: 20px; padding: 6px 12px; gap: 6px; max-width: 220px; border: 1px solid var(--border-color); }
         .search-bar input { border: none; background: none; outline: none; width: 100%; font-size: 12px; }
-
         .notification-container { position: fixed; top: 16px; right: 16px; z-index: 4000; display: flex; flex-direction: column; gap: 8px; }
         .notification { padding: 12px 16px; border-radius: 12px; background: white; box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 10px; animation: slideIn 0.3s ease; min-width: 240px; border-left: 4px solid var(--primary); font-size: 13px; font-weight: 500; }
         @keyframes slideIn { from { opacity: 0; transform: translateX(60px); } to { opacity: 1; transform: translateX(0); } }
-
-        /* Professional list enhancements */
-        .list-item { display: flex; align-items: center; padding: 12px 14px; border-bottom: 1px solid var(--border-color); transition: var(--transition); }
-        .list-item:hover { background: var(--hover-bg); }
-        .list-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 16px; flex-shrink: 0; }
-        .list-details { flex: 1; }
-        .list-title { font-weight: 600; font-size: 14px; }
-        .list-sub { font-size: 12px; color: var(--gray-400); }
-
-        /* Stock cards */
-        .stock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
-        .stock-card { background: var(--bg-card); border-radius: var(--radius); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); padding: 14px; transition: var(--transition); }
-        .stock-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
 
         @media (max-width: 768px) {
             .sidebar { transform: translateX(-100%); }
@@ -193,8 +182,7 @@
             .main-content { margin-left: 0; }
             .menu-toggle { display: block; }
             .header-right .user-email, .header-right .user-name { display: none; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .stock-grid { grid-template-columns: 1fr; }
+            .list-item { flex-wrap: wrap; }
         }
     </style>
 </head>
@@ -255,7 +243,7 @@
 
         <section id="dashboard" class="section active">
             <div class="section-header"><h2><i class="fas fa-th-large" style="color:var(--primary);"></i> ডেসবোর্ড</h2></div>
-            <div class="stats-grid" id="overviewStats"></div>
+            <div id="overviewStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;"></div>
         </section>
 
         <section id="purchaseForm" class="section">
@@ -271,9 +259,10 @@
         </section>
 
         <section id="purchaseList" class="section">
-            <div class="section-header"><h2><i class="fas fa-clipboard-list" style="color:var(--primary);"></i> ক্রয় লিস্ট</h2></div>
-            <div class="table-container"><div class="card-header" style="padding:10px 14px;"><h3>সকল ক্রয়</h3><div class="search-bar"><i class="fas fa-search"></i><input type="text" id="purchaseSearch" placeholder="খুঁজুন..." onkeyup="searchTable('purchaseSearch','purchaseList')"></div></div>
-            <div style="overflow-x:auto;"><table class="data-table"><thead><tr><th>তারিখ ও সময়</th><th>পণ্য</th><th>পরিমাণ</th><th>ক্রয় মূল্য</th><th>মোট</th><th></th></tr></thead><tbody id="purchaseList"></tbody></table></div></div>
+            <div class="section-header"><h2><i class="fas fa-clipboard-list" style="color:var(--primary);"></i> ক্রয় লিস্ট</h2>
+                <div class="search-bar"><i class="fas fa-search"></i><input type="text" id="purchaseSearch" placeholder="ক্রয় খুঁজুন..." onkeyup="filterList('purchaseSearch','purchaseListGrid')"></div>
+            </div>
+            <div class="list-grid" id="purchaseListGrid"></div>
         </section>
 
         <section id="salesForm" class="section">
@@ -291,9 +280,10 @@
         </section>
 
         <section id="salesList" class="section">
-            <div class="section-header"><h2><i class="fas fa-receipt" style="color:var(--primary);"></i> বিক্রি লিস্ট</h2></div>
-            <div class="table-container"><div class="card-header" style="padding:10px 14px;"><h3>সকল বিক্রয়</h3><div class="search-bar"><i class="fas fa-search"></i><input type="text" id="salesSearch" placeholder="খুঁজুন..." onkeyup="searchTable('salesSearch','salesList')"></div></div>
-            <div style="overflow-x:auto;"><table class="data-table"><thead><tr><th>তারিখ ও সময়</th><th>পণ্য</th><th>পরিমাণ</th><th>দাম</th><th>মোট</th><th>পেমেন্ট</th><th></th></tr></thead><tbody id="salesList"></tbody></table></div></div>
+            <div class="section-header"><h2><i class="fas fa-receipt" style="color:var(--primary);"></i> বিক্রি লিস্ট</h2>
+                <div class="search-bar"><i class="fas fa-search"></i><input type="text" id="salesSearch" placeholder="বিক্রি খুঁজুন..." onkeyup="filterList('salesSearch','salesListGrid')"></div>
+            </div>
+            <div class="list-grid" id="salesListGrid"></div>
         </section>
 
         <section id="expenseForm" class="section">
@@ -307,32 +297,35 @@
         </section>
 
         <section id="expenseList" class="section">
-            <div class="section-header"><h2><i class="fas fa-wallet" style="color:var(--primary);"></i> খরচ লিস্ট</h2></div>
-            <div class="table-container"><div class="card-header" style="padding:10px 14px;"><h3>সকল খরচ</h3><div class="search-bar"><i class="fas fa-search"></i><input type="text" id="expenseSearch" placeholder="খুঁজুন..." onkeyup="searchTable('expenseSearch','expenseList')"></div></div>
-            <div style="overflow-x:auto;"><table class="data-table"><thead><tr><th>তারিখ ও সময়</th><th>বিবরণ</th><th>ক্যাটাগরি</th><th>পরিমাণ</th><th></th></tr></thead><tbody id="expenseList"></tbody></table></div></div>
+            <div class="section-header"><h2><i class="fas fa-wallet" style="color:var(--primary);"></i> খরচ লিস্ট</h2>
+                <div class="search-bar"><i class="fas fa-search"></i><input type="text" id="expenseSearch" placeholder="খরচ খুঁজুন..." onkeyup="filterList('expenseSearch','expenseListGrid')"></div>
+            </div>
+            <div class="list-grid" id="expenseListGrid"></div>
         </section>
 
         <section id="allLists" class="section">
-            <div class="section-header"><h2><i class="fas fa-layer-group" style="color:var(--primary);"></i> সকল লিস্ট</h2></div>
-            <div class="table-container"><div class="card-header" style="padding:10px 14px;"><h3>সাম্প্রতিক কার্যক্রম</h3><div class="search-bar"><i class="fas fa-search"></i><input type="text" id="allListSearch" placeholder="খুঁজুন..." onkeyup="searchTable('allListSearch','allListBody')"></div></div>
-            <div style="overflow-x:auto;"><table class="data-table"><thead><tr><th>তারিখ ও সময়</th><th>ধরণ</th><th>বিবরণ</th><th>পরিমাণ</th></tr></thead><tbody id="allListBody"></tbody></table></div></div>
+            <div class="section-header"><h2><i class="fas fa-layer-group" style="color:var(--primary);"></i> সকল লিস্ট</h2>
+                <div class="search-bar"><i class="fas fa-search"></i><input type="text" id="allListSearch" placeholder="সব খুঁজুন..." onkeyup="filterList('allListSearch','allListGrid')"></div>
+            </div>
+            <div class="list-grid" id="allListGrid"></div>
         </section>
 
         <section id="stock" class="section">
             <div class="section-header"><h2><i class="fas fa-boxes-stacked" style="color:var(--primary);"></i> স্টক</h2></div>
             <div class="card" style="padding:12px;"><div class="search-bar" style="max-width:100%; margin-bottom:12px;"><i class="fas fa-search"></i><input type="text" id="stockSearch" placeholder="স্টক খুঁজুন..." onkeyup="filterStockCards()"></div>
-            <div class="stock-grid" id="stockCards"></div></div>
+            <div id="stockCards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;"></div></div>
         </section>
 
         <section id="customers" class="section">
-            <div class="section-header"><h2><i class="fas fa-users" style="color:var(--primary);"></i> ক্রেতার লিস্ট</h2></div>
-            <div class="table-container"><div class="card-header" style="padding:10px 14px;"><h3>বাকি ক্রেতা</h3><div class="search-bar"><i class="fas fa-search"></i><input type="text" id="customerSearch" placeholder="খুঁজুন..." onkeyup="searchTable('customerSearch','customerList')"></div></div>
-            <div style="overflow-x:auto;"><table class="data-table"><thead><tr><th>নাম</th><th>মোবাইল</th><th>মোট বাকি</th><th></th></tr></thead><tbody id="customerList"></tbody></table></div></div>
+            <div class="section-header"><h2><i class="fas fa-users" style="color:var(--primary);"></i> ক্রেতার লিস্ট</h2>
+                <div class="search-bar"><i class="fas fa-search"></i><input type="text" id="customerSearch" placeholder="ক্রেতা খুঁজুন..." onkeyup="filterList('customerSearch','customerListGrid')"></div>
+            </div>
+            <div class="list-grid" id="customerListGrid"></div>
         </section>
 
         <section id="reports" class="section">
             <div class="section-header"><h2><i class="fas fa-chart-pie" style="color:var(--primary);"></i> রিপোর্ট</h2></div>
-            <div class="stats-grid" id="reportStats"></div>
+            <div id="reportStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;"></div>
         </section>
 
         <section id="profile" class="section">
@@ -380,6 +373,9 @@
             document.getElementById('pageTitle').textContent = titles[sectionId] || 'ডেসবোর্ড';
             if(window.innerWidth<=768) document.getElementById('sidebar').classList.remove('active');
             if(sectionId==='dashboard'||sectionId==='reports') updateOverview();
+            if(sectionId==='purchaseList') loadPurchaseList();
+            if(sectionId==='salesList') loadSalesList();
+            if(sectionId==='expenseList') loadExpenseList();
             if(sectionId==='allLists') loadAllLists();
             if(sectionId==='stock') loadStockCards();
             if(sectionId==='customers') loadCustomerList();
@@ -401,14 +397,14 @@
         });
 
         function loadAllData(){ const uid=currentUser.uid;
-            database.ref('purchases/'+uid).on('value',s=>{allPurchases=s.val()||{};loadPurchaseList();loadStockCards();updateOverview();loadAllLists();});
-            database.ref('sales/'+uid).on('value',s=>{allSales=s.val()||{};loadSalesList();loadStockCards();loadCustomerList();updateOverview();loadAllLists();});
+            database.ref('purchases/'+uid).on('value',s=>{allPurchases=s.val()||{};loadPurchaseList();updateOverview();loadAllLists();});
+            database.ref('sales/'+uid).on('value',s=>{allSales=s.val()||{};loadSalesList();loadCustomerList();updateOverview();loadAllLists();});
             database.ref('expenses/'+uid).on('value',s=>{allExpenses=s.val()||{};loadExpenseList();updateOverview();loadAllLists();});
             database.ref('products/'+uid).on('value',s=>{allProducts=s.val()||{};loadStockCards();updateSalesProductOptions();});
             database.ref('customers/'+uid).on('value',s=>{allCustomers=s.val()||{};loadCustomerList();});
         }
 
-        document.getElementById('purchaseForm').addEventListener('submit', async e=>{ e.preventDefault(); const n=document.getElementById('purchaseProductName').value, q=+document.getElementById('purchaseQuantity').value, pp=+document.getElementById('purchasePrice').value, sp=+document.getElementById('purchaseSalePrice').value, sup=document.getElementById('purchaseSupplier').value; await database.ref('purchases/'+currentUser.uid).push().set({productName:n,quantity:q,purchasePrice:pp,salePrice:sp,supplier:sup,total:q*pp,timestamp:firebase.database.ServerValue.TIMESTAMP}); const key=n.toLowerCase().replace(/ /g,'_'); const ref=database.ref('products/'+currentUser.uid+'/'+key); const snap=await ref.once('value'); const d=snap.val()||{stock:0,sold:0,lastPurchaseDate:null}; await ref.set({name:n,stock:(d.stock||0)+q,sold:d.sold||0,purchasePrice:pp,salePrice:sp,lastPurchaseDate:firebase.database.ServerValue.TIMESTAMP}); e.target.reset(); showNotification('ক্রয় যোগ হয়েছে','success'); });
+        document.getElementById('purchaseForm').addEventListener('submit', async e=>{ e.preventDefault(); const n=document.getElementById('purchaseProductName').value, q=+document.getElementById('purchaseQuantity').value, pp=+document.getElementById('purchasePrice').value, sp=+document.getElementById('purchaseSalePrice').value, sup=document.getElementById('purchaseSupplier').value; await database.ref('purchases/'+currentUser.uid).push().set({productName:n,quantity:q,purchasePrice:pp,salePrice:sp,supplier:sup,total:q*pp,timestamp:firebase.database.ServerValue.TIMESTAMP}); const key=n.toLowerCase().replace(/ /g,'_'); const ref=database.ref('products/'+currentUser.uid+'/'+key); const snap=await ref.once('value'); const d=snap.val()||{stock:0,sold:0}; await ref.set({name:n,stock:(d.stock||0)+q,sold:d.sold||0,purchasePrice:pp,salePrice:sp,lastPurchaseDate:firebase.database.ServerValue.TIMESTAMP}); e.target.reset(); showNotification('ক্রয় যোগ হয়েছে','success'); });
         function updateSalesProductOptions(){ const sel=document.getElementById('salesProduct'); sel.innerHTML='<option value="">নির্বাচন করুন</option>'; Object.values(allProducts).forEach(p=>{if(p.stock>0)sel.innerHTML+=`<option value="${p.name}" data-stock="${p.stock}" data-price="${p.salePrice}">${p.name} (${p.stock})</option>`;}); }
         function updateSalesPrice(){ const sel=document.getElementById('salesProduct'); const opt=sel.options[sel.selectedIndex]; if(opt.value){document.getElementById('salesPrice').value=opt.dataset.price;document.getElementById('salesStockInfo').value=opt.dataset.stock;} }
         function calculateTotal(){ document.getElementById('salesTotal').value=(+document.getElementById('salesQuantity').value||0)*(+document.getElementById('salesPrice').value||0); }
@@ -416,26 +412,24 @@
         document.getElementById('salesForm').addEventListener('submit', async e=>{ e.preventDefault(); const n=document.getElementById('salesProduct').value,q=+document.getElementById('salesQuantity').value,p=+document.getElementById('salesPrice').value,t=+document.getElementById('salesTotal').value,pay=document.getElementById('salesPayment').value,cname=document.getElementById('salesCustomerName').value,cmob=document.getElementById('salesCustomerMobile').value; const key=n.toLowerCase().replace(/ /g,'_'); const ref=database.ref('products/'+currentUser.uid+'/'+key); const snap=await ref.once('value'); const d=snap.val(); if(!d||d.stock<q){showNotification('স্টক নেই','error');return;} await database.ref('sales/'+currentUser.uid).push().set({productName:n,quantity:q,price:p,total:t,payment:pay,customerName:pay==='due'?cname:'',customerMobile:pay==='due'?cmob:'',dueAmount:pay==='due'?t:0,timestamp:firebase.database.ServerValue.TIMESTAMP}); await ref.update({stock:d.stock-q,sold:(d.sold||0)+q}); if(pay==='due'&&cname){ const ck=cname.toLowerCase().replace(/ /g,'_'); const cref=database.ref('customers/'+currentUser.uid+'/'+ck); const cs=await cref.once('value'); const cd=cs.val()||{totalDue:0}; await cref.set({name:cname,mobile:cmob,totalDue:(cd.totalDue||0)+t}); } e.target.reset(); toggleDueField(); showNotification('বিক্রয় সফল','success'); });
         document.getElementById('expenseForm').addEventListener('submit', async e=>{ e.preventDefault(); await database.ref('expenses/'+currentUser.uid).push().set({description:document.getElementById('expenseDescription').value,amount:+document.getElementById('expenseAmount').value,category:document.getElementById('expenseCategory').value,timestamp:firebase.database.ServerValue.TIMESTAMP}); e.target.reset(); showNotification('খরচ যোগ হয়েছে','success'); });
 
-        function loadPurchaseList(){ document.getElementById('purchaseList').innerHTML=Object.entries(allPurchases).sort((a,b)=>b[1].timestamp-a[1].timestamp).map(([id,p])=>`<tr><td>${getBangladeshTime(p.timestamp)}</td><td>${p.productName}</td><td>${p.quantity}</td><td>৳${p.purchasePrice}</td><td>৳${p.total}</td><td><button class="btn-action btn-delete" onclick="deletePurchase('${id}')"><i class="fas fa-trash"></i></button></td></tr>`).join(''); }
-        function loadSalesList(){ document.getElementById('salesList').innerHTML=Object.entries(allSales).sort((a,b)=>b[1].timestamp-a[1].timestamp).map(([id,s])=>`<tr><td>${getBangladeshTime(s.timestamp)}</td><td>${s.productName}</td><td>${s.quantity}</td><td>৳${s.price}</td><td>৳${s.total}</td><td><span class="badge ${s.payment==='due'?'badge-warning':'badge-success'}">${s.payment==='due'?'বাকি':'পেইড'}</span></td><td><button class="btn-action btn-delete" onclick="deleteSale('${id}')"><i class="fas fa-trash"></i></button></td></tr>`).join(''); }
-        function loadExpenseList(){ document.getElementById('expenseList').innerHTML=Object.entries(allExpenses).sort((a,b)=>b[1].timestamp-a[1].timestamp).map(([id,e])=>`<tr><td>${getBangladeshTime(e.timestamp)}</td><td>${e.description}</td><td>${e.category}</td><td>৳${e.amount}</td><td><button class="btn-action btn-delete" onclick="deleteExpense('${id}')"><i class="fas fa-trash"></i></button></td></tr>`).join(''); }
-        function loadCustomerList(){ document.getElementById('customerList').innerHTML=Object.entries(allCustomers).map(([key,c])=>`<tr><td>${c.name}</td><td>${c.mobile||'-'}</td><td><span class="badge badge-warning">৳${c.totalDue||0}</span></td><td><button class="btn-action btn-pay" onclick="payDue('${key}')" title="পরিশোধ"><i class="fas fa-hand-holding-usd"></i></button></td></tr>`).join(''); }
-        function loadAllLists(){ const rows=[]; Object.entries(allPurchases).forEach(([id,p])=>rows.push({ts:p.timestamp,type:'ক্রয়',desc:`${p.productName} (${p.quantity})`,amount:`৳${p.total}`})); Object.entries(allSales).forEach(([id,s])=>rows.push({ts:s.timestamp,type:'বিক্রি',desc:`${s.productName} (${s.quantity})`,amount:`৳${s.total}`})); Object.entries(allExpenses).forEach(([id,e])=>rows.push({ts:e.timestamp,type:'খরচ',desc:e.description,amount:`৳${e.amount}`})); rows.sort((a,b)=>b.ts-a.ts); document.getElementById('allListBody').innerHTML=rows.map(r=>`<tr><td>${getBangladeshTime(r.ts)}</td><td><span class="badge ${r.type==='ক্রয়'?'badge-info':r.type==='বিক্রি'?'badge-success':'badge-danger'}">${r.type}</span></td><td>${r.desc}</td><td>${r.amount}</td></tr>`).join(''); }
-
-        function loadStockCards(){ const container=document.getElementById('stockCards'); container.innerHTML=''; Object.entries(allProducts).forEach(([key,p])=>{ const lastPurchase=p.lastPurchaseDate?getBangladeshTime(p.lastPurchaseDate):'N/A'; container.innerHTML+=`<div class="stock-card"><div class="flex justify-between items-center mb-3"><h3 style="font-weight:700;">${p.name}</h3><span class="badge ${p.stock>0?'badge-success':'badge-danger'}">${p.stock} স্টক</span></div><div class="mb-2 text-sm">ক্রয় মূল্য: ৳${p.purchasePrice} | বিক্রয়: ৳${p.salePrice}</div><div class="text-xs text-gray-500">সর্বশেষ ক্রয়: ${lastPurchase}</div><div class="text-xs text-gray-500">বিক্রি হয়েছে: ${p.sold||0}</div><div class="flex gap-2 mt-3"><button class="btn btn-primary btn-sm" onclick="quickPurchase('${key}')"><i class="fas fa-cart-plus"></i> ক্রয়</button><button class="btn btn-success btn-sm" onclick="quickSale('${key}')"><i class="fas fa-cash-register"></i> বিক্রি</button><button class="btn btn-danger btn-sm" onclick="deleteProduct('${key}')"><i class="fas fa-trash"></i></button></div></div>`; }); }
-        function filterStockCards(){ const f=document.getElementById('stockSearch').value.toLowerCase(); document.querySelectorAll('.stock-card').forEach(card=>card.style.display=card.textContent.toLowerCase().includes(f)?'':'none'); }
+        function loadPurchaseList(){ const grid=document.getElementById('purchaseListGrid'); if(!grid) return; grid.innerHTML=Object.entries(allPurchases).sort((a,b)=>b[1].timestamp-a[1].timestamp).map(([id,p])=>`<div class="list-item"><div class="list-icon" style="background:#e0e7ff;"><i class="fas fa-shopping-cart" style="color:#4f46e5;"></i></div><div class="list-details"><div class="list-title">${p.productName}</div><div class="list-sub">${getBangladeshTime(p.timestamp)} | সরবরাহকারী: ${p.supplier||'N/A'}</div></div><div class="list-amount">৳${p.total} <span class="badge badge-info">${p.quantity} পিস</span></div><div class="list-actions"><button class="btn-action btn-delete" onclick="deletePurchase('${id}')"><i class="fas fa-trash"></i></button></div></div>`).join(''); }
+        function loadSalesList(){ const grid=document.getElementById('salesListGrid'); if(!grid) return; grid.innerHTML=Object.entries(allSales).sort((a,b)=>b[1].timestamp-a[1].timestamp).map(([id,s])=>`<div class="list-item"><div class="list-icon" style="background:#d1fae5;"><i class="fas fa-cash-register" style="color:#065f46;"></i></div><div class="list-details"><div class="list-title">${s.productName}</div><div class="list-sub">${getBangladeshTime(s.timestamp)} | পেমেন্ট: ${s.payment}${s.customerName?' | '+s.customerName:''}</div></div><div class="list-amount">৳${s.total} <span class="badge ${s.payment==='due'?'badge-warning':'badge-success'}">${s.payment==='due'?'বাকি':'পেইড'}</span></div><div class="list-actions"><button class="btn-action btn-delete" onclick="deleteSale('${id}')"><i class="fas fa-trash"></i></button></div></div>`).join(''); }
+        function loadExpenseList(){ const grid=document.getElementById('expenseListGrid'); if(!grid) return; grid.innerHTML=Object.entries(allExpenses).sort((a,b)=>b[1].timestamp-a[1].timestamp).map(([id,e])=>`<div class="list-item"><div class="list-icon" style="background:#fee2e2;"><i class="fas fa-file-invoice" style="color:#dc2626;"></i></div><div class="list-details"><div class="list-title">${e.description}</div><div class="list-sub">${getBangladeshTime(e.timestamp)} | ${e.category}</div></div><div class="list-amount">৳${e.amount}</div><div class="list-actions"><button class="btn-action btn-delete" onclick="deleteExpense('${id}')"><i class="fas fa-trash"></i></button></div></div>`).join(''); }
+        function loadCustomerList(){ const grid=document.getElementById('customerListGrid'); if(!grid) return; grid.innerHTML=Object.entries(allCustomers).map(([key,c])=>`<div class="list-item"><div class="list-icon" style="background:#fef3c7;"><i class="fas fa-user" style="color:#b45309;"></i></div><div class="list-details"><div class="list-title">${c.name}</div><div class="list-sub">${c.mobile||'N/A'}</div></div><div class="list-amount">৳${c.totalDue||0} <span class="badge badge-warning">বাকি</span></div><div class="list-actions"><button class="btn-action btn-pay" onclick="payDue('${key}')" style="background:#d1fae5;color:#065f46;"><i class="fas fa-hand-holding-usd"></i></button></div></div>`).join(''); }
+        function loadAllLists(){ const rows=[]; Object.entries(allPurchases).forEach(([id,p])=>rows.push({ts:p.timestamp,type:'ক্রয়',desc:`${p.productName}`,amount:`৳${p.total}`,icon:'fa-shopping-cart',bg:'#e0e7ff',color:'#4f46e5'})); Object.entries(allSales).forEach(([id,s])=>rows.push({ts:s.timestamp,type:'বিক্রি',desc:`${s.productName}`,amount:`৳${s.total}`,icon:'fa-cash-register',bg:'#d1fae5',color:'#065f46'})); Object.entries(allExpenses).forEach(([id,e])=>rows.push({ts:e.timestamp,type:'খরচ',desc:e.description,amount:`৳${e.amount}`,icon:'fa-file-invoice',bg:'#fee2e2',color:'#dc2626'})); rows.sort((a,b)=>b.ts-a.ts); const grid=document.getElementById('allListGrid'); if(grid) grid.innerHTML=rows.map(r=>`<div class="list-item"><div class="list-icon" style="background:${r.bg};"><i class="fas ${r.icon}" style="color:${r.color};"></i></div><div class="list-details"><div class="list-title">${r.desc} <span class="badge badge-info">${r.type}</span></div><div class="list-sub">${getBangladeshTime(r.ts)}</div></div><div class="list-amount">${r.amount}</div></div>`).join(''); }
+        function loadStockCards(){ const container=document.getElementById('stockCards'); if(!container) return; container.innerHTML=''; Object.entries(allProducts).forEach(([key,p])=>{ const lastPurchase=p.lastPurchaseDate?getBangladeshTime(p.lastPurchaseDate):'N/A'; container.innerHTML+=`<div class="card" style="padding:14px;"><div style="display:flex;justify-content:space-between;margin-bottom:8px;"><h3 style="font-weight:700;">${p.name}</h3><span class="badge ${p.stock>0?'badge-success':'badge-danger'}">${p.stock} স্টক</span></div><div style="font-size:12px;color:var(--gray-600);">ক্রয়: ৳${p.purchasePrice} | বিক্রয়: ৳${p.salePrice}</div><div style="font-size:11px;color:var(--gray-400);margin-top:4px;">সর্বশেষ ক্রয়: ${lastPurchase}</div><div style="font-size:11px;color:var(--gray-400);">বিক্রি হয়েছে: ${p.sold||0}</div><div style="display:flex;gap:6px;margin-top:10px;"><button class="btn btn-primary btn-sm" style="padding:5px 10px;font-size:11px;" onclick="quickPurchase('${key}')"><i class="fas fa-cart-plus"></i> ক্রয়</button><button class="btn btn-success btn-sm" style="padding:5px 10px;font-size:11px;" onclick="quickSale('${key}')"><i class="fas fa-cash-register"></i> বিক্রি</button><button class="btn btn-danger btn-sm" style="padding:5px 10px;font-size:11px;" onclick="deleteProduct('${key}')"><i class="fas fa-trash"></i></button></div></div>`; }); }
+        function filterList(inputId, gridId){ const f=document.getElementById(inputId).value.toLowerCase(); document.querySelectorAll('#'+gridId+' .list-item').forEach(item=>item.style.display=item.textContent.toLowerCase().includes(f)?'':'none'); }
+        function filterStockCards(){ const f=document.getElementById('stockSearch').value.toLowerCase(); document.querySelectorAll('#stockCards .card').forEach(card=>card.style.display=card.textContent.toLowerCase().includes(f)?'':'none'); }
         function quickPurchase(key){ const p=allProducts[key]; const q=prompt(`কত ${p.name} কিনবেন?`); if(q&&+q>0){ const pp=parseFloat(prompt('ক্রয় মূল্য?')); const sp=parseFloat(prompt('বিক্রয় মূল্য?')); if(pp&&sp){ database.ref('purchases/'+currentUser.uid).push().set({productName:p.name,quantity:+q,purchasePrice:pp,salePrice:sp,total:+q*pp,timestamp:firebase.database.ServerValue.TIMESTAMP}); database.ref('products/'+currentUser.uid+'/'+key).update({stock:p.stock+ +q,lastPurchaseDate:firebase.database.ServerValue.TIMESTAMP,purchasePrice:pp,salePrice:sp}); showNotification('ক্রয় হয়েছে','success'); } } }
         function quickSale(key){ const p=allProducts[key]; const q=prompt(`কত ${p.name} বিক্রি করবেন?`); if(q&&+q>0 && +q<=p.stock){ const total=+q*p.salePrice; database.ref('sales/'+currentUser.uid).push().set({productName:p.name,quantity:+q,price:p.salePrice,total:total,payment:'cash',timestamp:firebase.database.ServerValue.TIMESTAMP}); database.ref('products/'+currentUser.uid+'/'+key).update({stock:p.stock- +q,sold:(p.sold||0)+ +q}); showNotification('বিক্রি হয়েছে','success'); } else alert('পর্যাপ্ত স্টক নেই'); }
         async function payDue(key){ const amount=prompt('কত টাকা পরিশোধ?'); if(amount&&!isNaN(amount)){ const c=allCustomers[key]; await database.ref('customers/'+currentUser.uid+'/'+key).update({totalDue:Math.max(0,(c.totalDue||0)-parseFloat(amount))}); showNotification('পরিশোধ সফল','success'); } }
 
-        function updateOverview(){ const now=new Date(); const bd=new Date(now.toLocaleString('en-US',{timeZone:'Asia/Dhaka'})); const today=bd.toDateString(); const yesterday=new Date(bd-86400000).toDateString(); const weekStart=new Date(bd-bd.getDay()*86400000).toDateString(); const monthStart=new Date(bd.getFullYear(),bd.getMonth(),1).toDateString(); let tSales=0,totalSales=0,tPur=0,totalPur=0,tExp=0,totalExp=0,totalDue=0; Object.values(allSales).forEach(s=>{totalSales+=s.total; if(new Date(new Date(s.timestamp).toLocaleString('en-US',{timeZone:'Asia/Dhaka'})).toDateString()===today)tSales+=s.total; if(s.payment==='due')totalDue+=s.dueAmount||0;}); Object.values(allPurchases).forEach(p=>{totalPur+=p.total; if(new Date(new Date(p.timestamp).toLocaleString('en-US',{timeZone:'Asia/Dhaka'})).toDateString()===today)tPur+=p.total;}); Object.values(allExpenses).forEach(e=>{totalExp+=e.amount; if(new Date(new Date(e.timestamp).toLocaleString('en-US',{timeZone:'Asia/Dhaka'})).toDateString()===today)tExp+=e.amount;}); const profit=totalSales-totalPur-totalExp; const html=`<div class="stat-card"><div class="stat-icon" style="background:#e0f2fe;"><i class="fas fa-calendar-day" style="color:#0284c7;"></i></div><div class="stat-info"><h4>আজ বিক্রি</h4><p>৳${tSales.toFixed(2)}</p></div></div><div class="stat-card"><div class="stat-icon" style="background:#dcfce7;"><i class="fas fa-shopping-cart" style="color:#16a34a;"></i></div><div class="stat-info"><h4>আজ ক্রয়</h4><p>৳${tPur.toFixed(2)}</p></div></div><div class="stat-card"><div class="stat-icon" style="background:#fee2e2;"><i class="fas fa-receipt" style="color:#dc2626;"></i></div><div class="stat-info"><h4>আজ খরচ</h4><p>৳${tExp.toFixed(2)}</p></div></div><div class="stat-card"><div class="stat-icon" style="background:#fef3c7;"><i class="fas fa-hand-holding-usd" style="color:#b45309;"></i></div><div class="stat-info"><h4>মোট বাকি</h4><p>৳${totalDue.toFixed(2)}</p></div></div><div class="stat-card"><div class="stat-icon" style="background:#ede9fe;"><i class="fas fa-chart-line" style="color:#7c3aed;"></i></div><div class="stat-info"><h4>মোট বিক্রি</h4><p>৳${totalSales.toFixed(2)}</p></div></div><div class="stat-card"><div class="stat-icon" style="background:#fce7f3;"><i class="fas fa-chart-pie" style="color:#be185d;"></i></div><div class="stat-info"><h4>মোট লাভ</h4><p>৳${profit.toFixed(2)}</p></div></div>`; document.getElementById('overviewStats').innerHTML=html; document.getElementById('reportStats').innerHTML=html; }
+        function updateOverview(){ const now=new Date(); const bd=new Date(now.toLocaleString('en-US',{timeZone:'Asia/Dhaka'})); const today=bd.toDateString(); let tSales=0,totalSales=0,tPur=0,totalPur=0,tExp=0,totalExp=0,totalDue=0; Object.values(allSales).forEach(s=>{totalSales+=s.total; if(new Date(new Date(s.timestamp).toLocaleString('en-US',{timeZone:'Asia/Dhaka'})).toDateString()===today)tSales+=s.total; if(s.payment==='due')totalDue+=s.dueAmount||0;}); Object.values(allPurchases).forEach(p=>{totalPur+=p.total; if(new Date(new Date(p.timestamp).toLocaleString('en-US',{timeZone:'Asia/Dhaka'})).toDateString()===today)tPur+=p.total;}); Object.values(allExpenses).forEach(e=>{totalExp+=e.amount; if(new Date(new Date(e.timestamp).toLocaleString('en-US',{timeZone:'Asia/Dhaka'})).toDateString()===today)tExp+=e.amount;}); const profit=totalSales-totalPur-totalExp; const html=`<div class="card"><div style="display:flex;align-items:center;gap:10px;"><div class="stat-icon" style="background:#e0f2fe;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-calendar-day" style="color:#0284c7;"></i></div><div><h4 style="font-size:11px;color:var(--gray-400);">আজ বিক্রি</h4><p style="font-size:18px;font-weight:700;">৳${tSales.toFixed(2)}</p></div></div></div><div class="card"><div style="display:flex;align-items:center;gap:10px;"><div class="stat-icon" style="background:#dcfce7;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-shopping-cart" style="color:#16a34a;"></i></div><div><h4 style="font-size:11px;color:var(--gray-400);">আজ ক্রয়</h4><p style="font-size:18px;font-weight:700;">৳${tPur.toFixed(2)}</p></div></div></div><div class="card"><div style="display:flex;align-items:center;gap:10px;"><div class="stat-icon" style="background:#fee2e2;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-receipt" style="color:#dc2626;"></i></div><div><h4 style="font-size:11px;color:var(--gray-400);">আজ খরচ</h4><p style="font-size:18px;font-weight:700;">৳${tExp.toFixed(2)}</p></div></div></div><div class="card"><div style="display:flex;align-items:center;gap:10px;"><div class="stat-icon" style="background:#fef3c7;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-hand-holding-usd" style="color:#b45309;"></i></div><div><h4 style="font-size:11px;color:var(--gray-400);">মোট বাকি</h4><p style="font-size:18px;font-weight:700;">৳${totalDue.toFixed(2)}</p></div></div></div><div class="card"><div style="display:flex;align-items:center;gap:10px;"><div class="stat-icon" style="background:#ede9fe;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-chart-line" style="color:#7c3aed;"></i></div><div><h4 style="font-size:11px;color:var(--gray-400);">মোট বিক্রি</h4><p style="font-size:18px;font-weight:700;">৳${totalSales.toFixed(2)}</p></div></div></div><div class="card"><div style="display:flex;align-items:center;gap:10px;"><div class="stat-icon" style="background:#fce7f3;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-chart-pie" style="color:#be185d;"></i></div><div><h4 style="font-size:11px;color:var(--gray-400);">মোট লাভ</h4><p style="font-size:18px;font-weight:700;">৳${profit.toFixed(2)}</p></div></div></div>`; document.getElementById('overviewStats').innerHTML=html; document.getElementById('reportStats').innerHTML=html; }
 
         async function deletePurchase(id){ if(confirm('ডিলিট?')){await database.ref('purchases/'+currentUser.uid+'/'+id).remove();showNotification('ডিলিট হয়েছে','success');} }
         async function deleteSale(id){ if(confirm('ডিলিট?')){await database.ref('sales/'+currentUser.uid+'/'+id).remove();showNotification('ডিলিট হয়েছে','success');} }
         async function deleteExpense(id){ if(confirm('ডিলিট?')){await database.ref('expenses/'+currentUser.uid+'/'+id).remove();showNotification('ডিলিট হয়েছে','success');} }
         async function deleteProduct(key){ if(confirm('ডিলিট?')){await database.ref('products/'+currentUser.uid+'/'+key).remove();showNotification('ডিলিট হয়েছে','success');} }
-        function searchTable(inputId,bodyId){ const f=document.getElementById(inputId).value.toLowerCase(); document.querySelectorAll('#'+bodyId+' tr').forEach(r=>r.style.display=r.textContent.toLowerCase().includes(f)?'':'none'); }
-
         function showNotification(msg,type='info'){ const c=document.createElement('div'); c.className='notification-container'; const icons={success:'fa-check-circle',error:'fa-exclamation-circle',warning:'fa-exclamation-triangle',info:'fa-info-circle'}; const d=document.createElement('div'); d.className='notification'; d.style.borderLeftColor=type==='success'?'#10b981':type==='error'?'#ef4444':type==='warning'?'#f59e0b':'#6d5ef3'; d.innerHTML=`<i class="fas ${icons[type]}" style="color:${type==='success'?'#10b981':type==='error'?'#ef4444':'#6d5ef3'}"></i><span>${msg}</span>`; c.appendChild(d); document.body.appendChild(c); setTimeout(()=>c.remove(),3500); }
         async function logout(){ await auth.signOut(); localStorage.removeItem('userData'); window.location.href='index.html'; }
     </script>
