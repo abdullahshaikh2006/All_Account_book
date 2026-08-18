@@ -40,16 +40,58 @@
 
         body {
             font-family: 'Hind Siliguri', 'Poppins', sans-serif;
-            background: var(--light);
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%);
             min-height: 100vh;
             display: flex;
             overflow-x: hidden;
         }
 
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid var(--border);
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            margin-top: 20px;
+            color: var(--gray);
+            font-size: 18px;
+            font-weight: 600;
+        }
+
         /* Sidebar */
         .sidebar {
             width: var(--sidebar-width);
-            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             position: fixed;
             height: 100vh;
             padding: 20px;
@@ -57,7 +99,8 @@
             flex-direction: column;
             transition: var(--transition);
             z-index: 1000;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+            box-shadow: 2px 0 20px rgba(0,0,0,0.3);
+            overflow-y: auto;
         }
 
         .sidebar-header {
@@ -68,42 +111,35 @@
         }
 
         .sidebar-logo {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 10px;
             color: white;
-            font-size: 28px;
-            box-shadow: var(--shadow-lg);
+            font-size: 32px;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+            animation: glow 2s infinite;
         }
 
-        .sidebar-header h3 {
-            font-size: 20px;
-            color: white;
-            font-weight: 700;
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4); }
+            50% { box-shadow: 0 10px 40px rgba(99, 102, 241, 0.7); }
         }
 
-        .sidebar-header p {
-            font-size: 12px;
-            color: rgba(255,255,255,0.7);
-        }
+        .sidebar-header h3 { font-size: 20px; color: white; font-weight: 700; margin-top: 10px; }
+        .sidebar-header p { font-size: 12px; color: rgba(255,255,255,0.6); }
 
-        .sidebar-nav {
-            list-style: none;
-            flex: 1;
-            overflow-y: auto;
-        }
-
+        .sidebar-nav { list-style: none; flex: 1; overflow-y: auto; padding: 10px 0; }
         .nav-item { margin-bottom: 5px; }
 
         .nav-link {
             display: flex;
             align-items: center;
-            padding: 12px 16px;
+            padding: 14px 16px;
             color: rgba(255,255,255,0.7);
             text-decoration: none;
             border-radius: 12px;
@@ -122,13 +158,13 @@
             top: 0;
             width: 4px;
             height: 100%;
-            background: var(--primary);
+            background: linear-gradient(180deg, #667eea, #764ba2);
             transform: scaleY(0);
             transition: var(--transition);
         }
 
         .nav-link:hover {
-            background: rgba(99, 102, 241, 0.2);
+            background: rgba(255,255,255,0.1);
             color: white;
             transform: translateX(5px);
         }
@@ -136,13 +172,12 @@
         .nav-link:hover::before { transform: scaleY(1); }
 
         .nav-link.active {
-            background: var(--primary);
+            background: linear-gradient(90deg, rgba(99, 102, 241, 0.3), rgba(118, 75, 162, 0.3));
             color: white;
             box-shadow: var(--shadow);
         }
 
         .nav-link.active::before { transform: scaleY(1); }
-
         .nav-link i { font-size: 20px; width: 24px; text-align: center; }
 
         .sidebar-footer {
@@ -173,6 +208,8 @@
             top: 20px;
             z-index: 100;
             backdrop-filter: blur(10px);
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .menu-toggle {
@@ -184,6 +221,30 @@
             color: var(--gray);
         }
 
+        /* Bangladesh Time Display */
+        .bd-time {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: var(--shadow);
+        }
+
+        .bd-time i {
+            font-size: 18px;
+            animation: clockPulse 2s infinite;
+        }
+
+        @keyframes clockPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
         .user-info {
             display: flex;
             align-items: center;
@@ -191,10 +252,10 @@
         }
 
         .user-avatar {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, #667eea, #764ba2);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -202,12 +263,15 @@
             font-weight: bold;
             cursor: pointer;
             position: relative;
+            font-size: 18px;
+            border: 2px solid white;
+            box-shadow: var(--shadow);
         }
 
         .user-dropdown {
             display: none;
             position: absolute;
-            top: 50px;
+            top: 55px;
             right: 0;
             background: white;
             border-radius: 12px;
@@ -232,11 +296,7 @@
         .user-dropdown a:hover { background: var(--light); }
 
         /* Content Sections */
-        .section {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
+        .section { display: none; animation: fadeIn 0.4s ease; }
         .section.active { display: block; }
 
         @keyframes fadeIn {
@@ -254,15 +314,19 @@
         }
 
         .section-header h2 {
-            font-size: 24px;
+            font-size: 26px;
             color: var(--dark);
             font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 15px;
             margin-bottom: 30px;
         }
@@ -276,6 +340,7 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
+            border: 1px solid transparent;
         }
 
         .stat-card::before {
@@ -285,7 +350,7 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            background: linear-gradient(90deg, #667eea, #764ba2);
             transform: scaleX(0);
             transition: var(--transition);
         }
@@ -293,25 +358,33 @@
         .stat-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-xl);
+            border-color: #667eea;
         }
 
         .stat-card:hover::before { transform: scaleX(1); }
 
         .stat-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 22px;
             margin-bottom: 10px;
+            transition: var(--transition);
         }
 
-        .stat-icon.sales { background: #d1fae5; color: var(--success); }
-        .stat-icon.purchase { background: #dbeafe; color: var(--primary); }
-        .stat-icon.expense { background: #fee2e2; color: var(--danger); }
-        .stat-icon.due { background: #fef3c7; color: var(--warning); }
+        .stat-card:hover .stat-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .stat-icon.sales { background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; }
+        .stat-icon.purchase { background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; }
+        .stat-icon.expense { background: linear-gradient(135deg, #fee2e2, #fecaca); color: #991b1b; }
+        .stat-icon.due { background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; }
+        .stat-icon.customer { background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #5b21b6; }
+        .stat-icon.profit { background: linear-gradient(135deg, #fce7f3, #fbcfe8); color: #831843; }
 
         .stat-info h4 { font-size: 13px; color: var(--gray); margin-bottom: 5px; }
         .stat-info p { font-size: 20px; font-weight: 700; color: var(--dark); }
@@ -321,27 +394,27 @@
             background: white;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            padding: 20px;
+            padding: 25px;
             margin-bottom: 20px;
             transition: var(--transition);
+            border: 1px solid transparent;
         }
 
-        .card:hover { box-shadow: var(--shadow-lg); }
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: #e2e8f0;
+        }
 
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
             gap: 10px;
         }
 
-        .card-header h3 {
-            font-size: 18px;
-            color: var(--dark);
-            font-weight: 700;
-        }
+        .card-header h3 { font-size: 20px; color: var(--dark); font-weight: 700; }
 
         /* Tables */
         .table-container {
@@ -352,15 +425,12 @@
             margin-bottom: 20px;
         }
 
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+        .data-table { width: 100%; border-collapse: collapse; }
 
         .data-table th {
-            background: var(--primary);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 12px;
+            padding: 15px;
             text-align: left;
             font-weight: 600;
             font-size: 13px;
@@ -369,7 +439,7 @@
         }
 
         .data-table td {
-            padding: 12px;
+            padding: 15px;
             border-bottom: 1px solid var(--border);
             transition: var(--transition);
         }
@@ -380,48 +450,55 @@
         .action-buttons { display: flex; gap: 5px; }
 
         .btn-action {
-            padding: 6px;
+            padding: 8px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             transition: var(--transition);
-            font-size: 13px;
+            font-size: 14px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .btn-edit { background: #dbeafe; color: var(--primary); }
-        .btn-edit:hover { background: var(--primary); color: white; }
-        .btn-delete { background: #fee2e2; color: var(--danger); }
-        .btn-delete:hover { background: var(--danger); color: white; }
-        .btn-print { background: #fef3c7; color: var(--warning); }
-        .btn-print:hover { background: var(--warning); color: white; }
+        .btn-edit { background: #dbeafe; color: #1e40af; }
+        .btn-edit:hover { background: #1e40af; color: white; transform: scale(1.1); }
+        .btn-delete { background: #fee2e2; color: #991b1b; }
+        .btn-delete:hover { background: #991b1b; color: white; transform: scale(1.1); }
+        .btn-print { background: #fef3c7; color: #92400e; }
+        .btn-print:hover { background: #92400e; color: white; transform: scale(1.1); }
 
         /* Forms */
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; color: var(--dark); font-size: 14px; }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark); font-size: 14px; }
 
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 10px 15px;
+            padding: 12px 15px;
             border: 2px solid var(--border);
             border-radius: 10px;
             font-size: 15px;
             transition: var(--transition);
             font-family: inherit;
+            background: #f8fafc;
         }
 
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: var(--primary);
+            border-color: #667eea;
+            background: white;
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
 
         /* Buttons */
         .btn {
-            padding: 12px 24px;
+            padding: 14px 24px;
             border: none;
             border-radius: 10px;
             font-size: 15px;
@@ -452,10 +529,11 @@
         .btn:hover::before { width: 300px; height: 300px; }
         .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 
-        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
-        .btn-success { background: var(--success); color: white; }
-        .btn-danger { background: var(--danger); color: white; }
-        .btn-warning { background: var(--warning); color: white; }
+        .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+        .btn-success { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+        .btn-danger { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
+        .btn-warning { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
+        .btn-sm { padding: 10px 16px; font-size: 13px; }
 
         /* Modal */
         .modal {
@@ -476,8 +554,8 @@
         .modal-content {
             background: white;
             border-radius: var(--radius);
-            padding: 25px;
-            max-width: 500px;
+            padding: 30px;
+            max-width: 550px;
             width: 90%;
             max-height: 90vh;
             overflow-y: auto;
@@ -488,6 +566,26 @@
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 { font-size: 20px; color: var(--dark); }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+
+        .close-modal:hover { color: var(--danger); transform: rotate(90deg); }
 
         /* Notification */
         .notification-container {
@@ -501,7 +599,7 @@
         }
 
         .notification {
-            padding: 15px 20px;
+            padding: 16px 20px;
             border-radius: 12px;
             background: white;
             box-shadow: var(--shadow-xl);
@@ -511,6 +609,7 @@
             animation: slideInRight 0.3s ease;
             min-width: 300px;
             max-width: 400px;
+            border-left: 4px solid;
         }
 
         @keyframes slideInRight {
@@ -518,21 +617,36 @@
             to { opacity: 1; transform: translateX(0); }
         }
 
-        .notification.success { border-left: 4px solid var(--success); }
-        .notification.error { border-left: 4px solid var(--danger); }
-        .notification.warning { border-left: 4px solid var(--warning); }
-        .notification.info { border-left: 4px solid var(--primary); }
+        .notification.success { border-left-color: var(--success); }
+        .notification.error { border-left-color: var(--danger); }
+        .notification.warning { border-left-color: var(--warning); }
+        .notification.info { border-left-color: var(--primary); }
+
+        .notification i {
+            font-size: 24px;
+        }
+
+        .notification.success i { color: var(--success); }
+        .notification.error i { color: var(--danger); }
+        .notification.warning i { color: var(--warning); }
+        .notification.info i { color: var(--primary); }
 
         /* Search Bar */
         .search-bar {
             display: flex;
             align-items: center;
-            background: var(--light);
+            background: #f1f5f9;
             border-radius: 25px;
             padding: 10px 15px;
             gap: 10px;
             flex: 1;
             max-width: 300px;
+            transition: var(--transition);
+        }
+
+        .search-bar:focus-within {
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            background: white;
         }
 
         .search-bar input {
@@ -542,6 +656,31 @@
             width: 100%;
             font-size: 15px;
             font-family: inherit;
+        }
+
+        /* Badge */
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-success { background: #d1fae5; color: #065f46; }
+        .badge-danger { background: #fee2e2; color: #991b1b; }
+        .badge-warning { background: #fef3c7; color: #92400e; }
+        .badge-info { background: #dbeafe; color: #1e40af; }
+        .badge-purple { background: #ede9fe; color: #5b21b6; }
+
+        /* Time Display */
+        .time-badge {
+            display: inline-block;
+            background: #f1f5f9;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            color: var(--gray);
         }
 
         /* Mobile Responsive */
@@ -554,17 +693,26 @@
             .section-header { flex-direction: column; align-items: flex-start; }
             .search-bar { max-width: 100%; }
             .data-table { font-size: 12px; }
-            .data-table th, .data-table td { padding: 8px; }
+            .data-table th, .data-table td { padding: 10px; }
+            .top-bar { flex-direction: column; align-items: flex-start; }
+            .bd-time { width: 100%; justify-content: center; }
         }
 
         @media (max-width: 480px) {
             .stats-grid { grid-template-columns: 1fr; }
             .btn { padding: 10px 16px; font-size: 13px; }
-            .modal-content { padding: 15px; }
+            .modal-content { padding: 20px; }
+            .card { padding: 15px; }
         }
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="spinner"></div>
+        <p class="loading-text">লোড হচ্ছে...</p>
+    </div>
+
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -578,6 +726,7 @@
             <li class="nav-item"><a class="nav-link" data-section="purchase" onclick="showSection('purchase')"><i class="fas fa-shopping-cart"></i><span>জিনিস ক্রয়</span></a></li>
             <li class="nav-item"><a class="nav-link" data-section="sales" onclick="showSection('sales')"><i class="fas fa-cash-register"></i><span>জিনিস বিক্রি</span></a></li>
             <li class="nav-item"><a class="nav-link" data-section="stock" onclick="showSection('stock')"><i class="fas fa-boxes"></i><span>স্টক</span></a></li>
+            <li class="nav-item"><a class="nav-link" data-section="customers" onclick="showSection('customers')"><i class="fas fa-users"></i><span>ক্রেতা</span></a></li>
             <li class="nav-item"><a class="nav-link" data-section="expenses" onclick="showSection('expenses')"><i class="fas fa-receipt"></i><span>খরচ</span></a></li>
             <li class="nav-item"><a class="nav-link" data-section="reports" onclick="showSection('reports')"><i class="fas fa-file-alt"></i><span>রিপোর্ট</span></a></li>
             <li class="nav-item"><a class="nav-link" data-section="settings" onclick="showSection('settings')"><i class="fas fa-cog"></i><span>সেটিংস</span></a></li>
@@ -592,34 +741,43 @@
     <main class="main-content">
         <!-- Top Bar -->
         <header class="top-bar">
-            <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-            <div class="search-bar"><i class="fas fa-search"></i><input type="text" id="globalSearch" placeholder="খুঁজুন..." onkeyup="globalSearch()"></div>
-            <div class="user-info">
-                <div class="user-avatar" id="userAvatar">U
-                    <div class="user-dropdown">
-                        <a href="#" onclick="showSection('settings')"><i class="fas fa-user"></i> প্রোফাইল</a>
-                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> লগআউট</a>
-                    </div>
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+                <div class="search-bar"><i class="fas fa-search"></i><input type="text" id="globalSearch" placeholder="খুঁজুন..." onkeyup="globalSearch()"></div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div class="bd-time" id="bdTime">
+                    <i class="fas fa-clock"></i>
+                    <span id="bdTimeText">লোড হচ্ছে...</span>
                 </div>
-                <div><div id="userName" style="font-weight:600;">User</div><div id="userEmail" style="font-size:12px;color:var(--gray);">user@email.com</div></div>
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">U
+                        <div class="user-dropdown">
+                            <a href="#" onclick="showSection('settings')"><i class="fas fa-user"></i> প্রোফাইল</a>
+                            <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> লগআউট</a>
+                        </div>
+                    </div>
+                    <div><div id="userName" style="font-weight:600;">User</div><div id="userEmail" style="font-size:12px;color:var(--gray);">user@email.com</div></div>
+                </div>
             </div>
         </header>
 
         <!-- Overview Section -->
         <section id="overview" class="section active">
-            <div class="section-header"><h2>ড্যাশবোর্ড ওভারভিউ</h2></div>
+            <div class="section-header">
+                <h2>📊 ড্যাশবোর্ড ওভারভিউ</h2>
+            </div>
             <div class="stats-grid" id="overviewStats"></div>
-            <div class="card"><div class="card-header"><h3>সাম্প্রতিক কার্যক্রম</h3></div><div id="recentActivities"></div></div>
         </section>
 
         <!-- Purchase Section -->
         <section id="purchase" class="section">
             <div class="section-header">
-                <h2>জিনিস ক্রয়</h2>
-                <button class="btn btn-primary" onclick="showPurchaseForm()"><i class="fas fa-plus"></i> নতুন ক্রয়</button>
+                <h2>🛒 জিনিস ক্রয়</h2>
+                <button class="btn btn-primary" onclick="toggleForm('purchaseFormCard')"><i class="fas fa-plus"></i> নতুন ক্রয়</button>
             </div>
             <div class="card" id="purchaseFormCard" style="display:none;">
-                <h3>ক্রয় ফর্ম</h3>
+                <h3 style="margin-bottom:20px;">ক্রয় ফর্ম</h3>
                 <form id="purchaseForm">
                     <div class="form-group"><label>পণ্যের নাম</label><input type="text" id="purchaseProductName" required></div>
                     <div class="form-group"><label>পরিমাণ</label><input type="number" id="purchaseQuantity" required min="1"></div>
@@ -630,22 +788,24 @@
                 </form>
             </div>
             <div class="table-container">
-                <div class="card-header" style="padding:15px;"><h3>ক্রয় তালিকা</h3><div class="search-bar"><i class="fas fa-search"></i><input type="text" id="purchaseSearch" placeholder="ক্রয় খুঁজুন..." onkeyup="searchTable('purchaseSearch','purchaseList')"></div></div>
-                <table class="data-table">
-                    <thead><tr><th>তারিখ</th><th>পণ্য</th><th>পরিমাণ</th><th>ক্রয় মূল্য</th><th>মোট</th><th>অ্যাকশন</th></tr></thead>
-                    <tbody id="purchaseList"></tbody>
-                </table>
+                <div class="card-header" style="padding:15px 20px;"><h3>ক্রয় তালিকা</h3><div class="search-bar"><i class="fas fa-search"></i><input type="text" id="purchaseSearch" placeholder="ক্রয় খুঁজুন..." onkeyup="searchTable('purchaseSearch','purchaseList')"></div></div>
+                <div style="overflow-x:auto;">
+                    <table class="data-table">
+                        <thead><tr><th>তারিখ ও সময়</th><th>পণ্য</th><th>পরিমাণ</th><th>ক্রয় মূল্য</th><th>মোট</th><th>অ্যাকশন</th></tr></thead>
+                        <tbody id="purchaseList"></tbody>
+                    </table>
+                </div>
             </div>
         </section>
 
         <!-- Sales Section -->
         <section id="sales" class="section">
             <div class="section-header">
-                <h2>জিনিস বিক্রি</h2>
-                <button class="btn btn-primary" onclick="showSalesForm()"><i class="fas fa-plus"></i> নতুন বিক্রি</button>
+                <h2>💰 জিনিস বিক্রি</h2>
+                <button class="btn btn-primary" onclick="toggleForm('salesFormCard')"><i class="fas fa-plus"></i> নতুন বিক্রি</button>
             </div>
             <div class="card" id="salesFormCard" style="display:none;">
-                <h3>বিক্রয় ফর্ম</h3>
+                <h3 style="margin-bottom:20px;">বিক্রয় ফর্ম</h3>
                 <form id="salesForm">
                     <div class="form-group"><label>পণ্য নির্বাচন করুন</label><select id="salesProduct" onchange="updateSalesPrice()" required><option value="">পণ্য নির্বাচন করুন</option></select></div>
                     <div class="form-group"><label>স্টকে আছে</label><input type="text" id="salesStockInfo" disabled></div>
@@ -655,65 +815,86 @@
                     <div class="form-group"><label>পেমেন্ট পদ্ধতি</label><select id="salesPayment" onchange="toggleDueField()"><option value="cash">হ্যান্ডক্যাশ</option><option value="bkash">বিকাশ</option><option value="nagad">নগদ</option><option value="rocket">রকেট</option><option value="upay">উপায়</option><option value="due">বাকি</option></select></div>
                     <div id="dueFields" style="display:none;">
                         <div class="form-group"><label>ক্রেতার নাম</label><input type="text" id="salesCustomerName"></div>
+                        <div class="form-group"><label>মোবাইল নম্বর</label><input type="tel" id="salesCustomerMobile"></div>
                         <div class="form-group"><label>মোট বাকি</label><input type="number" id="salesDueAmount" disabled></div>
                     </div>
                     <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> বিক্রি করুন</button>
                 </form>
             </div>
             <div class="table-container">
-                <div class="card-header" style="padding:15px;"><h3>বিক্রয় তালিকা</h3><div class="search-bar"><i class="fas fa-search"></i><input type="text" id="salesSearch" placeholder="বিক্রি খুঁজুন..." onkeyup="searchTable('salesSearch','salesList')"></div></div>
-                <table class="data-table">
-                    <thead><tr><th>তারিখ</th><th>পণ্য</th><th>পরিমাণ</th><th>দাম</th><th>মোট</th><th>পেমেন্ট</th><th>অ্যাকশন</th></tr></thead>
-                    <tbody id="salesList"></tbody>
-                </table>
+                <div class="card-header" style="padding:15px 20px;"><h3>বিক্রয় তালিকা</h3><div class="search-bar"><i class="fas fa-search"></i><input type="text" id="salesSearch" placeholder="বিক্রি খুঁজুন..." onkeyup="searchTable('salesSearch','salesList')"></div></div>
+                <div style="overflow-x:auto;">
+                    <table class="data-table">
+                        <thead><tr><th>তারিখ ও সময়</th><th>পণ্য</th><th>পরিমাণ</th><th>দাম</th><th>মোট</th><th>পেমেন্ট</th><th>অ্যাকশন</th></tr></thead>
+                        <tbody id="salesList"></tbody>
+                    </table>
+                </div>
             </div>
         </section>
 
         <!-- Stock Section -->
         <section id="stock" class="section">
-            <div class="section-header"><h2>স্টক</h2></div>
+            <div class="section-header"><h2>📦 স্টক</h2></div>
             <div class="table-container">
-                <div class="card-header" style="padding:15px;"><h3>স্টক তালিকা</h3><div class="search-bar"><i class="fas fa-search"></i><input type="text" id="stockSearch" placeholder="স্টক খুঁজুন..." onkeyup="searchTable('stockSearch','stockList')"></div></div>
-                <table class="data-table">
-                    <thead><tr><th>পণ্য</th><th>স্টকে আছে</th><th>বিক্রি হয়েছে</th><th>ক্রয় মূল্য</th><th>বিক্রয় মূল্য</th><th>অ্যাকশন</th></tr></thead>
-                    <tbody id="stockList"></tbody>
-                </table>
+                <div class="card-header" style="padding:15px 20px;"><h3>স্টক তালিকা</h3><div class="search-bar"><i class="fas fa-search"></i><input type="text" id="stockSearch" placeholder="স্টক খুঁজুন..." onkeyup="searchTable('stockSearch','stockList')"></div></div>
+                <div style="overflow-x:auto;">
+                    <table class="data-table">
+                        <thead><tr><th>পণ্য</th><th>স্টকে আছে</th><th>বিক্রি হয়েছে</th><th>ক্রয় মূল্য</th><th>বিক্রয় মূল্য</th><th>অ্যাকশন</th></tr></thead>
+                        <tbody id="stockList"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Customers Section -->
+        <section id="customers" class="section">
+            <div class="section-header"><h2>👥 ক্রেতা তালিকা</h2></div>
+            <div class="table-container">
+                <div class="card-header" style="padding:15px 20px;"><h3>বাকি ক্রেতা</h3><div class="search-bar"><i class="fas fa-search"></i><input type="text" id="customerSearch" placeholder="ক্রেতা খুঁজুন..." onkeyup="searchTable('customerSearch','customerList')"></div></div>
+                <div style="overflow-x:auto;">
+                    <table class="data-table">
+                        <thead><tr><th>নাম</th><th>মোবাইল</th><th>মোট বাকি</th><th>অ্যাকশন</th></tr></thead>
+                        <tbody id="customerList"></tbody>
+                    </table>
+                </div>
             </div>
         </section>
 
         <!-- Expenses Section -->
         <section id="expenses" class="section">
             <div class="section-header">
-                <h2>খরচ</h2>
-                <button class="btn btn-primary" onclick="showExpenseForm()"><i class="fas fa-plus"></i> নতুন খরচ</button>
+                <h2>💸 খরচ</h2>
+                <button class="btn btn-primary" onclick="toggleForm('expenseFormCard')"><i class="fas fa-plus"></i> নতুন খরচ</button>
             </div>
             <div class="card" id="expenseFormCard" style="display:none;">
-                <h3>খরচ ফর্ম</h3>
+                <h3 style="margin-bottom:20px;">খরচ ফর্ম</h3>
                 <form id="expenseForm">
                     <div class="form-group"><label>খরচের বিবরণ</label><input type="text" id="expenseDescription" required></div>
                     <div class="form-group"><label>পরিমাণ</label><input type="number" id="expenseAmount" required min="0"></div>
-                    <div class="form-group"><label>ক্যাটাগরি</label><select id="expenseCategory"><option value="rent">ভাড়া</option><option value="salary">বেতন</option><option value="utility">ইউটিলিটি</option><option value="transport">পরিবহন</option><option value="other">অন্যান্য</option></select></div>
+                    <div class="form-group"><label>ক্যাটাগরি</label><select id="expenseCategory"><option value="rent">ভাড়া</option><option value="salary">বেতন</option><option value="utility">ইউটিলিটি</option><option value="transport">পরিবহন</option><option value="food">খাবার</option><option value="other">অন্যান্য</option></select></div>
                     <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> খরচ যোগ করুন</button>
                 </form>
             </div>
             <div class="table-container">
-                <div class="card-header" style="padding:15px;"><h3>খরচ তালিকা</h3><div class="search-bar"><i class="fas fa-search"></i><input type="text" id="expenseSearch" placeholder="খরচ খুঁজুন..." onkeyup="searchTable('expenseSearch','expenseList')"></div></div>
-                <table class="data-table">
-                    <thead><tr><th>তারিখ</th><th>বিবরণ</th><th>ক্যাটাগরি</th><th>পরিমাণ</th><th>অ্যাকশন</th></tr></thead>
-                    <tbody id="expenseList"></tbody>
-                </table>
+                <div class="card-header" style="padding:15px 20px;"><h3>খরচ তালিকা</h3><div class="search-bar"><i class="fas fa-search"></i><input type="text" id="expenseSearch" placeholder="খরচ খুঁজুন..." onkeyup="searchTable('expenseSearch','expenseList')"></div></div>
+                <div style="overflow-x:auto;">
+                    <table class="data-table">
+                        <thead><tr><th>তারিখ ও সময়</th><th>বিবরণ</th><th>ক্যাটাগরি</th><th>পরিমাণ</th><th>অ্যাকশন</th></tr></thead>
+                        <tbody id="expenseList"></tbody>
+                    </table>
+                </div>
             </div>
         </section>
 
         <!-- Reports Section -->
         <section id="reports" class="section">
-            <div class="section-header"><h2>রিপোর্ট</h2></div>
+            <div class="section-header"><h2>📈 সম্পূর্ণ রিপোর্ট</h2></div>
             <div class="stats-grid" id="reportStats"></div>
         </section>
 
         <!-- Settings Section -->
         <section id="settings" class="section">
-            <div class="section-header"><h2>সেটিংস</h2></div>
+            <div class="section-header"><h2>⚙️ সেটিংস</h2></div>
             <div class="card">
                 <form id="settingsForm">
                     <div class="form-group"><label>নাম</label><input type="text" id="settingsName"></div>
@@ -748,28 +929,80 @@
         let allPurchases = {};
         let allSales = {};
         let allExpenses = {};
+        let allCustomers = {};
+
+        // Bangladesh Time Functions
+        function getBangladeshTime(timestamp) {
+            if (!timestamp) return 'N/A';
+            const date = new Date(timestamp);
+            const bdDate = new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Dhaka' }));
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit',
+                hour12: true,
+                timeZone: 'Asia/Dhaka'
+            };
+            return bdDate.toLocaleString('bn-BD', options);
+        }
+
+        function getCurrentBangladeshTime() {
+            const now = new Date();
+            const bdTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Dhaka' }));
+            return bdTime.toLocaleString('bn-BD', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true,
+                timeZone: 'Asia/Dhaka'
+            });
+        }
+
+        // Update Bangladesh Time Display
+        function updateBangladeshTime() {
+            const timeText = document.getElementById('bdTimeText');
+            if (timeText) {
+                timeText.textContent = getCurrentBangladeshTime();
+            }
+        }
+
+        setInterval(updateBangladeshTime, 1000);
 
         // Auth check
         auth.onAuthStateChanged(async (user) => {
             if (user) {
                 currentUser = user;
-                const userSnapshot = await database.ref('users/' + user.uid).once('value');
-                const userData = userSnapshot.val();
-                
-                if (!userData || userData.role === 'admin') {
-                    window.location.href = 'admin-dashboard.html';
-                    return;
+                try {
+                    const userSnapshot = await database.ref('users/' + user.uid).once('value');
+                    const userData = userSnapshot.val();
+                    
+                    if (!userData || userData.role === 'admin') {
+                        window.location.href = 'admin-dashboard.html';
+                        return;
+                    }
+                    
+                    document.getElementById('userName').textContent = userData.name || 'User';
+                    document.getElementById('userEmail').textContent = userData.email || '';
+                    document.getElementById('userAvatar').textContent = (userData.name || 'U').charAt(0).toUpperCase();
+                    document.getElementById('businessNameDisplay').textContent = userData.businessName || 'ব্যবসার নাম';
+                    document.getElementById('settingsName').value = userData.name || '';
+                    document.getElementById('settingsBusinessName').value = userData.businessName || '';
+                    document.getElementById('settingsMobile').value = userData.mobileNumber || '';
+                    
+                    loadAllData();
+                    updateBangladeshTime();
+                } catch (error) {
+                    console.error('Error loading user data:', error);
+                    showNotification('ডেটা লোড করতে সমস্যা হয়েছে', 'error');
                 }
                 
-                document.getElementById('userName').textContent = userData.name || 'User';
-                document.getElementById('userEmail').textContent = userData.email || '';
-                document.getElementById('userAvatar').textContent = (userData.name || 'U').charAt(0).toUpperCase();
-                document.getElementById('businessNameDisplay').textContent = userData.businessName || 'ব্যবসার নাম';
-                document.getElementById('settingsName').value = userData.name || '';
-                document.getElementById('settingsBusinessName').value = userData.businessName || '';
-                document.getElementById('settingsMobile').value = userData.mobileNumber || '';
-                
-                loadAllData();
+                document.getElementById('loadingScreen').classList.add('hidden');
             } else {
                 window.location.href = 'index.html';
             }
@@ -785,6 +1018,8 @@
                 loadPurchaseList();
                 loadStockList();
                 updateOverview();
+            }, (error) => {
+                console.error('Error loading purchases:', error);
             });
             
             // Load sales
@@ -792,7 +1027,10 @@
                 allSales = snapshot.val() || {};
                 loadSalesList();
                 loadStockList();
+                loadCustomerList();
                 updateOverview();
+            }, (error) => {
+                console.error('Error loading sales:', error);
             });
             
             // Load expenses
@@ -800,6 +1038,8 @@
                 allExpenses = snapshot.val() || {};
                 loadExpenseList();
                 updateOverview();
+            }, (error) => {
+                console.error('Error loading expenses:', error);
             });
             
             // Load products
@@ -807,6 +1047,16 @@
                 allProducts = snapshot.val() || {};
                 loadStockList();
                 updateSalesProductOptions();
+            }, (error) => {
+                console.error('Error loading products:', error);
+            });
+            
+            // Load customers
+            database.ref('customers/' + uid).on('value', (snapshot) => {
+                allCustomers = snapshot.val() || {};
+                loadCustomerList();
+            }, (error) => {
+                console.error('Error loading customers:', error);
             });
         }
 
@@ -817,7 +1067,7 @@
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
             if (window.innerWidth <= 768) document.getElementById('sidebar').classList.remove('active');
-            if (sectionId === 'reports') loadReports();
+            if (sectionId === 'reports') updateOverview();
             if (sectionId === 'overview') updateOverview();
         }
 
@@ -825,20 +1075,8 @@
             document.getElementById('sidebar').classList.toggle('active');
         }
 
-        // Show forms
-        function showPurchaseForm() {
-            const card = document.getElementById('purchaseFormCard');
-            card.style.display = card.style.display === 'none' ? 'block' : 'none';
-        }
-
-        function showSalesForm() {
-            const card = document.getElementById('salesFormCard');
-            card.style.display = card.style.display === 'none' ? 'block' : 'none';
-            updateSalesProductOptions();
-        }
-
-        function showExpenseForm() {
-            const card = document.getElementById('expenseFormCard');
+        function toggleForm(formId) {
+            const card = document.getElementById(formId);
             card.style.display = card.style.display === 'none' ? 'block' : 'none';
         }
 
@@ -856,18 +1094,15 @@
                 return;
             }
             
-            const uid = currentUser.uid;
-            const purchaseRef = database.ref('purchases/' + uid).push();
-            const purchaseData = {
-                productName, quantity, purchasePrice, salePrice, supplier,
-                total: quantity * purchasePrice,
-                timestamp: firebase.database.ServerValue.TIMESTAMP
-            };
-            
             try {
-                await purchaseRef.set(purchaseData);
+                const uid = currentUser.uid;
+                const purchaseRef = database.ref('purchases/' + uid).push();
+                await purchaseRef.set({
+                    productName, quantity, purchasePrice, salePrice, supplier,
+                    total: quantity * purchasePrice,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                });
                 
-                // Update product stock
                 const productKey = productName.toLowerCase().replace(/ /g, '_');
                 const productRef = database.ref('products/' + uid + '/' + productKey);
                 const productSnapshot = await productRef.once('value');
@@ -882,10 +1117,11 @@
                 });
                 
                 document.getElementById('purchaseForm').reset();
-                showPurchaseForm();
-                showNotification('ক্রয় সফল হয়েছে', 'success');
+                toggleForm('purchaseFormCard');
+                showNotification('ক্রয় সফল হয়েছে! সময়: ' + getCurrentBangladeshTime(), 'success');
             } catch (error) {
-                showNotification(error.message, 'error');
+                console.error('Purchase error:', error);
+                showNotification('ক্রয় করতে সমস্যা হয়েছে: ' + error.message, 'error');
             }
         });
 
@@ -932,6 +1168,7 @@
             const total = parseFloat(document.getElementById('salesTotal').value);
             const payment = document.getElementById('salesPayment').value;
             const customerName = document.getElementById('salesCustomerName').value;
+            const customerMobile = document.getElementById('salesCustomerMobile').value;
             const dueAmount = parseFloat(document.getElementById('salesDueAmount').value) || 0;
             
             if (!productName || !quantity || !price) {
@@ -940,39 +1177,52 @@
             }
             
             const productKey = productName.toLowerCase().replace(/ /g, '_');
-            const productRef = database.ref('products/' + currentUser.uid + '/' + productKey);
-            const productSnapshot = await productRef.once('value');
-            const productData = productSnapshot.val();
-            
-            if (!productData || productData.stock < quantity) {
-                showNotification('স্টকে পর্যাপ্ত পণ্য নেই', 'error');
-                return;
-            }
-            
-            const uid = currentUser.uid;
-            const salesRef = database.ref('sales/' + uid).push();
-            const salesData = {
-                productName, quantity, price, total, payment,
-                customerName: payment === 'due' ? customerName : '',
-                dueAmount: payment === 'due' ? dueAmount : 0,
-                timestamp: firebase.database.ServerValue.TIMESTAMP
-            };
             
             try {
-                await salesRef.set(salesData);
+                const productRef = database.ref('products/' + currentUser.uid + '/' + productKey);
+                const productSnapshot = await productRef.once('value');
+                const productData = productSnapshot.val();
                 
-                // Update product stock
+                if (!productData || productData.stock < quantity) {
+                    showNotification('স্টকে পর্যাপ্ত পণ্য নেই!', 'error');
+                    return;
+                }
+                
+                const uid = currentUser.uid;
+                const salesRef = database.ref('sales/' + uid).push();
+                await salesRef.set({
+                    productName, quantity, price, total, payment,
+                    customerName: payment === 'due' ? customerName : '',
+                    customerMobile: payment === 'due' ? customerMobile : '',
+                    dueAmount: payment === 'due' ? dueAmount : 0,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                });
+                
                 await productRef.update({
                     stock: productData.stock - quantity,
                     sold: (productData.sold || 0) + quantity
                 });
                 
+                if (payment === 'due' && customerName) {
+                    const customerKey = customerName.toLowerCase().replace(/ /g, '_');
+                    const customerRef = database.ref('customers/' + uid + '/' + customerKey);
+                    const customerSnapshot = await customerRef.once('value');
+                    const customerData = customerSnapshot.val() || { totalDue: 0 };
+                    
+                    await customerRef.set({
+                        name: customerName,
+                        mobile: customerMobile || '',
+                        totalDue: (customerData.totalDue || 0) + dueAmount
+                    });
+                }
+                
                 document.getElementById('salesForm').reset();
                 document.getElementById('dueFields').style.display = 'none';
-                showSalesForm();
-                showNotification('বিক্রয় সফল হয়েছে', 'success');
+                toggleForm('salesFormCard');
+                showNotification('বিক্রয় সফল হয়েছে! সময়: ' + getCurrentBangladeshTime(), 'success');
             } catch (error) {
-                showNotification(error.message, 'error');
+                console.error('Sales error:', error);
+                showNotification('বিক্রয় করতে সমস্যা হয়েছে: ' + error.message, 'error');
             }
         });
 
@@ -988,39 +1238,39 @@
                 return;
             }
             
-            const uid = currentUser.uid;
-            const expenseRef = database.ref('expenses/' + uid).push();
-            
             try {
+                const uid = currentUser.uid;
+                const expenseRef = database.ref('expenses/' + uid).push();
                 await expenseRef.set({
                     description, amount, category,
                     timestamp: firebase.database.ServerValue.TIMESTAMP
                 });
                 
                 document.getElementById('expenseForm').reset();
-                showExpenseForm();
-                showNotification('খরচ যোগ করা হয়েছে', 'success');
+                toggleForm('expenseFormCard');
+                showNotification('খরচ যোগ করা হয়েছে! সময়: ' + getCurrentBangladeshTime(), 'success');
             } catch (error) {
-                showNotification(error.message, 'error');
+                console.error('Expense error:', error);
+                showNotification('খরচ যোগ করতে সমস্যা হয়েছে: ' + error.message, 'error');
             }
         });
 
-        // Load lists
+        // Load lists with Bangladesh Time
         function loadPurchaseList() {
             const list = document.getElementById('purchaseList');
             list.innerHTML = '';
             
             Object.entries(allPurchases).forEach(([id, purchase]) => {
-                const date = new Date(purchase.timestamp).toLocaleDateString('bn-BD');
+                const dateTime = getBangladeshTime(purchase.timestamp);
                 list.innerHTML += `
                     <tr>
-                        <td>${date}</td>
-                        <td>${purchase.productName}</td>
+                        <td><span class="time-badge"><i class="far fa-clock"></i> ${dateTime}</span></td>
+                        <td><strong>${purchase.productName}</strong></td>
                         <td>${purchase.quantity}</td>
                         <td>৳${purchase.purchasePrice}</td>
                         <td>৳${purchase.total}</td>
                         <td><div class="action-buttons">
-                            <button class="btn-action btn-print" onclick="printItem('${id}')"><i class="fas fa-print"></i></button>
+                            <button class="btn-action btn-print" onclick="printItem('purchase', '${id}')"><i class="fas fa-print"></i></button>
                             <button class="btn-action btn-delete" onclick="deletePurchase('${id}')"><i class="fas fa-trash"></i></button>
                         </div></td>
                     </tr>
@@ -1033,18 +1283,18 @@
             list.innerHTML = '';
             
             Object.entries(allSales).forEach(([id, sale]) => {
-                const date = new Date(sale.timestamp).toLocaleDateString('bn-BD');
+                const dateTime = getBangladeshTime(sale.timestamp);
                 const paymentText = {cash:'হ্যান্ডক্যাশ',bkash:'বিকাশ',nagad:'নগদ',rocket:'রকেট',upay:'উপায়',due:'বাকি'}[sale.payment] || sale.payment;
                 list.innerHTML += `
                     <tr>
-                        <td>${date}</td>
-                        <td>${sale.productName}</td>
+                        <td><span class="time-badge"><i class="far fa-clock"></i> ${dateTime}</span></td>
+                        <td><strong>${sale.productName}</strong></td>
                         <td>${sale.quantity}</td>
                         <td>৳${sale.price}</td>
                         <td>৳${sale.total}</td>
-                        <td>${paymentText}${sale.payment === 'due' ? ' (' + sale.customerName + ')' : ''}</td>
+                        <td><span class="badge ${sale.payment === 'due' ? 'badge-warning' : 'badge-success'}">${paymentText}${sale.payment === 'due' ? ' (' + sale.customerName + ')' : ''}</span></td>
                         <td><div class="action-buttons">
-                            <button class="btn-action btn-print" onclick="printItem('${id}')"><i class="fas fa-print"></i></button>
+                            <button class="btn-action btn-print" onclick="printItem('sale', '${id}')"><i class="fas fa-print"></i></button>
                             <button class="btn-action btn-delete" onclick="deleteSale('${id}')"><i class="fas fa-trash"></i></button>
                         </div></td>
                     </tr>
@@ -1059,14 +1309,32 @@
             Object.entries(allProducts).forEach(([key, product]) => {
                 list.innerHTML += `
                     <tr>
-                        <td>${product.name}</td>
-                        <td>${product.stock}</td>
+                        <td><strong>${product.name}</strong></td>
+                        <td><span class="badge ${product.stock > 0 ? 'badge-success' : 'badge-danger'}">${product.stock}</span></td>
                         <td>${product.sold || 0}</td>
                         <td>৳${product.purchasePrice}</td>
                         <td>৳${product.salePrice}</td>
                         <td><div class="action-buttons">
-                            <button class="btn-action btn-print" onclick="printStock('${key}')"><i class="fas fa-print"></i></button>
+                            <button class="btn-action btn-print" onclick="printItem('stock', '${key}')"><i class="fas fa-print"></i></button>
                             <button class="btn-action btn-delete" onclick="deleteProduct('${key}')"><i class="fas fa-trash"></i></button>
+                        </div></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function loadCustomerList() {
+            const list = document.getElementById('customerList');
+            list.innerHTML = '';
+            
+            Object.entries(allCustomers).forEach(([key, customer]) => {
+                list.innerHTML += `
+                    <tr>
+                        <td><strong>${customer.name}</strong></td>
+                        <td>${customer.mobile || 'N/A'}</td>
+                        <td><span class="badge badge-warning">৳${customer.totalDue || 0}</span></td>
+                        <td><div class="action-buttons">
+                            <button class="btn-action btn-print" onclick="printItem('customer', '${key}')"><i class="fas fa-print"></i></button>
                         </div></td>
                     </tr>
                 `;
@@ -1078,15 +1346,16 @@
             list.innerHTML = '';
             
             Object.entries(allExpenses).forEach(([id, expense]) => {
-                const date = new Date(expense.timestamp).toLocaleDateString('bn-BD');
+                const dateTime = getBangladeshTime(expense.timestamp);
+                const categoryText = {rent:'ভাড়া',salary:'বেতন',utility:'ইউটিলিটি',transport:'পরিবহন',food:'খাবার',other:'অন্যান্য'}[expense.category] || expense.category;
                 list.innerHTML += `
                     <tr>
-                        <td>${date}</td>
+                        <td><span class="time-badge"><i class="far fa-clock"></i> ${dateTime}</span></td>
                         <td>${expense.description}</td>
-                        <td>${expense.category}</td>
+                        <td><span class="badge badge-info">${categoryText}</span></td>
                         <td>৳${expense.amount}</td>
                         <td><div class="action-buttons">
-                            <button class="btn-action btn-print" onclick="printItem('${id}')"><i class="fas fa-print"></i></button>
+                            <button class="btn-action btn-print" onclick="printItem('expense', '${id}')"><i class="fas fa-print"></i></button>
                             <button class="btn-action btn-delete" onclick="deleteExpense('${id}')"><i class="fas fa-trash"></i></button>
                         </div></td>
                     </tr>
@@ -1094,14 +1363,15 @@
             });
         }
 
-        // Update overview
+        // Update overview with Bangladesh Time
         function updateOverview() {
             const now = new Date();
-            const today = now.toDateString();
-            const yesterday = new Date(now - 86400000).toDateString();
-            const weekStart = new Date(now - now.getDay() * 86400000).toDateString();
-            const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toDateString();
-            const yearStart = new Date(now.getFullYear(), 0, 1).toDateString();
+            const bdNow = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Dhaka' }));
+            const today = bdNow.toDateString();
+            const yesterday = new Date(bdNow - 86400000).toDateString();
+            const weekStart = new Date(bdNow - bdNow.getDay() * 86400000).toDateString();
+            const monthStart = new Date(bdNow.getFullYear(), bdNow.getMonth(), 1).toDateString();
+            const yearStart = new Date(bdNow.getFullYear(), 0, 1).toDateString();
             
             let todaySales = 0, yesterdaySales = 0, weekSales = 0, monthSales = 0, yearSales = 0, totalSales = 0;
             let todayPurchase = 0, yesterdayPurchase = 0, weekPurchase = 0, monthPurchase = 0, yearPurchase = 0, totalPurchase = 0;
@@ -1109,7 +1379,7 @@
             let todayExpense = 0, yesterdayExpense = 0, weekExpense = 0, monthExpense = 0, yearExpense = 0, totalExpense = 0;
             
             Object.values(allSales).forEach(sale => {
-                const saleDate = new Date(sale.timestamp).toDateString();
+                const saleDate = new Date(new Date(sale.timestamp).toLocaleString('en-US', { timeZone: 'Asia/Dhaka' })).toDateString();
                 totalSales += sale.total;
                 if (saleDate === today) todaySales += sale.total;
                 if (saleDate === yesterday) yesterdaySales += sale.total;
@@ -1127,7 +1397,7 @@
             });
             
             Object.values(allPurchases).forEach(purchase => {
-                const purchaseDate = new Date(purchase.timestamp).toDateString();
+                const purchaseDate = new Date(new Date(purchase.timestamp).toLocaleString('en-US', { timeZone: 'Asia/Dhaka' })).toDateString();
                 totalPurchase += purchase.total;
                 if (purchaseDate === today) todayPurchase += purchase.total;
                 if (purchaseDate === yesterday) yesterdayPurchase += purchase.total;
@@ -1137,7 +1407,7 @@
             });
             
             Object.values(allExpenses).forEach(expense => {
-                const expenseDate = new Date(expense.timestamp).toDateString();
+                const expenseDate = new Date(new Date(expense.timestamp).toLocaleString('en-US', { timeZone: 'Asia/Dhaka' })).toDateString();
                 totalExpense += expense.amount;
                 if (expenseDate === today) todayExpense += expense.amount;
                 if (expenseDate === yesterday) yesterdayExpense += expense.amount;
@@ -1146,76 +1416,87 @@
                 if (new Date(expense.timestamp) >= new Date(yearStart)) yearExpense += expense.amount;
             });
             
+            const totalProfit = totalSales - totalPurchase - totalExpense;
+            
             const statsHTML = `
-                <div class="stat-card"><div class="stat-icon sales"><i class="fas fa-money-bill-wave"></i></div><div class="stat-info"><h4>আজকের বিক্রি</h4><p>৳${todaySales}</p></div></div>
-                <div class="stat-card"><div class="stat-icon sales"><i class="fas fa-calendar-day"></i></div><div class="stat-info"><h4>গতকাল বিক্রি</h4><p>৳${yesterdaySales}</p></div></div>
-                <div class="stat-card"><div class="stat-icon sales"><i class="fas fa-calendar-week"></i></div><div class="stat-info"><h4>এই সপ্তাহে বিক্রি</h4><p>৳${weekSales}</p></div></div>
-                <div class="stat-card"><div class="stat-icon sales"><i class="fas fa-calendar-alt"></i></div><div class="stat-info"><h4>এই মাসে বিক্রি</h4><p>৳${monthSales}</p></div></div>
-                <div class="stat-card"><div class="stat-icon sales"><i class="fas fa-calendar"></i></div><div class="stat-info"><h4>এই বছরে বিক্রি</h4><p>৳${yearSales}</p></div></div>
-                <div class="stat-card"><div class="stat-icon sales"><i class="fas fa-chart-line"></i></div><div class="stat-info"><h4>মোট বিক্রি</h4><p>৳${totalSales}</p></div></div>
-                <div class="stat-card"><div class="stat-icon purchase"><i class="fas fa-shopping-cart"></i></div><div class="stat-info"><h4>আজকের ক্রয়</h4><p>৳${todayPurchase}</p></div></div>
-                <div class="stat-card"><div class="stat-icon purchase"><i class="fas fa-calendar-day"></i></div><div class="stat-info"><h4>গতকাল ক্রয়</h4><p>৳${yesterdayPurchase}</p></div></div>
-                <div class="stat-card"><div class="stat-icon purchase"><i class="fas fa-calendar-week"></i></div><div class="stat-info"><h4>এই সপ্তাহে ক্রয়</h4><p>৳${weekPurchase}</p></div></div>
-                <div class="stat-card"><div class="stat-icon purchase"><i class="fas fa-calendar-alt"></i></div><div class="stat-info"><h4>এই মাসে ক্রয়</h4><p>৳${monthPurchase}</p></div></div>
-                <div class="stat-card"><div class="stat-icon purchase"><i class="fas fa-calendar"></i></div><div class="stat-info"><h4>এই বছরে ক্রয়</h4><p>৳${yearPurchase}</p></div></div>
-                <div class="stat-card"><div class="stat-icon purchase"><i class="fas fa-chart-line"></i></div><div class="stat-info"><h4>মোট ক্রয়</h4><p>৳${totalPurchase}</p></div></div>
-                <div class="stat-card"><div class="stat-icon due"><i class="fas fa-hand-holding-usd"></i></div><div class="stat-info"><h4>আজকের বাকি</h4><p>৳${todayDue}</p></div></div>
-                <div class="stat-card"><div class="stat-icon due"><i class="fas fa-calendar-day"></i></div><div class="stat-info"><h4>গতকাল বাকি</h4><p>৳${yesterdayDue}</p></div></div>
-                <div class="stat-card"><div class="stat-icon due"><i class="fas fa-calendar-week"></i></div><div class="stat-info"><h4>এই সপ্তাহে বাকি</h4><p>৳${weekDue}</p></div></div>
-                <div class="stat-card"><div class="stat-icon due"><i class="fas fa-calendar-alt"></i></div><div class="stat-info"><h4>এই মাসে বাকি</h4><p>৳${monthDue}</p></div></div>
-                <div class="stat-card"><div class="stat-icon due"><i class="fas fa-calendar"></i></div><div class="stat-info"><h4>এই বছরে বাকি</h4><p>৳${yearDue}</p></div></div>
-                <div class="stat-card"><div class="stat-icon due"><i class="fas fa-chart-line"></i></div><div class="stat-info"><h4>মোট বাকি</h4><p>৳${totalDue}</p></div></div>
-                <div class="stat-card"><div class="stat-icon expense"><i class="fas fa-receipt"></i></div><div class="stat-info"><h4>আজকের খরচ</h4><p>৳${todayExpense}</p></div></div>
-                <div class="stat-card"><div class="stat-icon expense"><i class="fas fa-calendar-day"></i></div><div class="stat-info"><h4>গতকাল খরচ</h4><p>৳${yesterdayExpense}</p></div></div>
-                <div class="stat-card"><div class="stat-icon expense"><i class="fas fa-calendar-week"></i></div><div class="stat-info"><h4>এই সপ্তাহে খরচ</h4><p>৳${weekExpense}</p></div></div>
-                <div class="stat-card"><div class="stat-icon expense"><i class="fas fa-calendar-alt"></i></div><div class="stat-info"><h4>এই মাসে খরচ</h4><p>৳${monthExpense}</p></div></div>
-                <div class="stat-card"><div class="stat-icon expense"><i class="fas fa-calendar"></i></div><div class="stat-info"><h4>এই বছরে খরচ</h4><p>৳${yearExpense}</p></div></div>
-                <div class="stat-card"><div class="stat-icon expense"><i class="fas fa-chart-line"></i></div><div class="stat-info"><h4>মোট খরচ</h4><p>৳${totalExpense}</p></div></div>
+                <div class="stat-card"><div class="stat-icon sales"><i class="fas fa-money-bill-wave"></i></div><div class="stat-info"><h4>আজকের বিক্রি</h4><p>৳${todaySales.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon sales"><i class="fas fa-calendar-day"></i></div><div class="stat-info"><h4>গতকাল বিক্রি</h4><p>৳${yesterdaySales.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon sales"><i class="fas fa-calendar-week"></i></div><div class="stat-info"><h4>এই সপ্তাহে বিক্রি</h4><p>৳${weekSales.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon sales"><i class="fas fa-calendar-alt"></i></div><div class="stat-info"><h4>এই মাসে বিক্রি</h4><p>৳${monthSales.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon sales"><i class="fas fa-calendar"></i></div><div class="stat-info"><h4>এই বছরে বিক্রি</h4><p>৳${yearSales.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon sales"><i class="fas fa-chart-line"></i></div><div class="stat-info"><h4>মোট বিক্রি</h4><p>৳${totalSales.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon purchase"><i class="fas fa-shopping-cart"></i></div><div class="stat-info"><h4>আজকের ক্রয়</h4><p>৳${todayPurchase.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon purchase"><i class="fas fa-calendar-day"></i></div><div class="stat-info"><h4>গতকাল ক্রয়</h4><p>৳${yesterdayPurchase.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon purchase"><i class="fas fa-calendar-week"></i></div><div class="stat-info"><h4>এই সপ্তাহে ক্রয়</h4><p>৳${weekPurchase.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon purchase"><i class="fas fa-calendar-alt"></i></div><div class="stat-info"><h4>এই মাসে ক্রয়</h4><p>৳${monthPurchase.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon purchase"><i class="fas fa-calendar"></i></div><div class="stat-info"><h4>এই বছরে ক্রয়</h4><p>৳${yearPurchase.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon purchase"><i class="fas fa-chart-line"></i></div><div class="stat-info"><h4>মোট ক্রয়</h4><p>৳${totalPurchase.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon due"><i class="fas fa-hand-holding-usd"></i></div><div class="stat-info"><h4>আজকের বাকি</h4><p>৳${todayDue.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon due"><i class="fas fa-calendar-day"></i></div><div class="stat-info"><h4>গতকাল বাকি</h4><p>৳${yesterdayDue.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon due"><i class="fas fa-calendar-week"></i></div><div class="stat-info"><h4>এই সপ্তাহে বাকি</h4><p>৳${weekDue.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon due"><i class="fas fa-calendar-alt"></i></div><div class="stat-info"><h4>এই মাসে বাকি</h4><p>৳${monthDue.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon due"><i class="fas fa-calendar"></i></div><div class="stat-info"><h4>এই বছরে বাকি</h4><p>৳${yearDue.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon due"><i class="fas fa-chart-line"></i></div><div class="stat-info"><h4>মোট বাকি</h4><p>৳${totalDue.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon expense"><i class="fas fa-receipt"></i></div><div class="stat-info"><h4>আজকের খরচ</h4><p>৳${todayExpense.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon expense"><i class="fas fa-calendar-day"></i></div><div class="stat-info"><h4>গতকাল খরচ</h4><p>৳${yesterdayExpense.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon expense"><i class="fas fa-calendar-week"></i></div><div class="stat-info"><h4>এই সপ্তাহে খরচ</h4><p>৳${weekExpense.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon expense"><i class="fas fa-calendar-alt"></i></div><div class="stat-info"><h4>এই মাসে খরচ</h4><p>৳${monthExpense.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon expense"><i class="fas fa-calendar"></i></div><div class="stat-info"><h4>এই বছরে খরচ</h4><p>৳${yearExpense.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon expense"><i class="fas fa-chart-line"></i></div><div class="stat-info"><h4>মোট খরচ</h4><p>৳${totalExpense.toFixed(2)}</p></div></div>
+                <div class="stat-card"><div class="stat-icon profit"><i class="fas fa-chart-pie"></i></div><div class="stat-info"><h4>মোট লাভ</h4><p>৳${totalProfit.toFixed(2)}</p></div></div>
             `;
             
             document.getElementById('overviewStats').innerHTML = statsHTML;
-        }
-
-        function loadReports() {
-            const reportStats = document.getElementById('reportStats');
-            reportStats.innerHTML = '<div class="card"><h3>রিপোর্ট শীঘ্রই আসছে...</h3></div>';
+            document.getElementById('reportStats').innerHTML = statsHTML;
         }
 
         // Delete functions
         async function deletePurchase(id) {
             if (confirm('আপনি কি নিশ্চিতভাবে এই ক্রয়টি ডিলিট করতে চান?')) {
-                await database.ref('purchases/' + currentUser.uid + '/' + id).remove();
-                showNotification('ক্রয় ডিলিট করা হয়েছে', 'success');
+                try {
+                    await database.ref('purchases/' + currentUser.uid + '/' + id).remove();
+                    showNotification('ক্রয় ডিলিট করা হয়েছে', 'success');
+                } catch (error) {
+                    showNotification('ডিলিট করতে সমস্যা: ' + error.message, 'error');
+                }
             }
         }
 
         async function deleteSale(id) {
             if (confirm('আপনি কি নিশ্চিতভাবে এই বিক্রয়টি ডিলিট করতে চান?')) {
-                await database.ref('sales/' + currentUser.uid + '/' + id).remove();
-                showNotification('বিক্রয় ডিলিট করা হয়েছে', 'success');
+                try {
+                    await database.ref('sales/' + currentUser.uid + '/' + id).remove();
+                    showNotification('বিক্রয় ডিলিট করা হয়েছে', 'success');
+                } catch (error) {
+                    showNotification('ডিলিট করতে সমস্যা: ' + error.message, 'error');
+                }
             }
         }
 
         async function deleteExpense(id) {
             if (confirm('আপনি কি নিশ্চিতভাবে এই খরচটি ডিলিট করতে চান?')) {
-                await database.ref('expenses/' + currentUser.uid + '/' + id).remove();
-                showNotification('খরচ ডিলিট করা হয়েছে', 'success');
+                try {
+                    await database.ref('expenses/' + currentUser.uid + '/' + id).remove();
+                    showNotification('খরচ ডিলিট করা হয়েছে', 'success');
+                } catch (error) {
+                    showNotification('ডিলিট করতে সমস্যা: ' + error.message, 'error');
+                }
             }
         }
 
         async function deleteProduct(key) {
             if (confirm('আপনি কি নিশ্চিতভাবে এই পণ্যটি ডিলিট করতে চান?')) {
-                await database.ref('products/' + currentUser.uid + '/' + key).remove();
-                showNotification('পণ্য ডিলিট করা হয়েছে', 'success');
+                try {
+                    await database.ref('products/' + currentUser.uid + '/' + key).remove();
+                    showNotification('পণ্য ডিলিট করা হয়েছে', 'success');
+                } catch (error) {
+                    showNotification('ডিলিট করতে সমস্যা: ' + error.message, 'error');
+                }
             }
         }
 
         // Print functions
-        function printItem(id) {
-            window.print();
-        }
-
-        function printStock(key) {
+        function printItem(type, id) {
             window.print();
         }
 
@@ -1255,7 +1536,7 @@
                 document.getElementById('businessNameDisplay').textContent = businessName;
                 showNotification('সেটিংস সেভ করা হয়েছে', 'success');
             } catch (error) {
-                showNotification(error.message, 'error');
+                showNotification('সেভ করতে সমস্যা: ' + error.message, 'error');
             }
         });
 
@@ -1265,18 +1546,24 @@
             container.className = 'notification-container';
             container.style.cssText = 'position:fixed;top:20px;right:20px;z-index:3000;';
             
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                warning: 'fa-exclamation-triangle',
+                info: 'fa-info-circle'
+            };
+            
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
             notification.innerHTML = `
-                <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}" 
-                   style="color: ${type === 'success' ? 'var(--success)' : type === 'error' ? 'var(--danger)' : 'var(--primary)'}; font-size: 24px;"></i>
-                <span>${message}</span>
+                <i class="fas ${icons[type]}" style="font-size:24px;"></i>
+                <span style="font-weight:500;">${message}</span>
             `;
             
             container.appendChild(notification);
             document.body.appendChild(container);
             
-            setTimeout(() => container.remove(), 3000);
+            setTimeout(() => container.remove(), 4000);
         }
 
         // Logout
