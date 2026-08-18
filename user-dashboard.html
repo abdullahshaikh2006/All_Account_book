@@ -523,9 +523,19 @@
 
     <script>
         // ===== FIREBASE CONFIG =====
-        const firebaseConfig = { apiKey: "AIzaSyB16ZrdZ2IY_R8aSZipz-O6SelEblngJLE", authDomain: "marketing-calculation.firebaseapp.com", databaseURL: "https://marketing-calculation-default-rtdb.firebaseio.com", projectId: "marketing-calculation", storageBucket: "marketing-calculation.firebasestorage.app", messagingSenderId: "371475369216", appId: "1:371475369216:web:3aff3d68b707f65c1e77e5", measurementId: "G-79164G85DX" };
+        const firebaseConfig = { 
+            apiKey: "AIzaSyB16ZrdZ2IY_R8aSZipz-O6SelEblngJLE", 
+            authDomain: "marketing-calculation.firebaseapp.com", 
+            databaseURL: "https://marketing-calculation-default-rtdb.firebaseio.com", 
+            projectId: "marketing-calculation", 
+            storageBucket: "marketing-calculation.firebasestorage.app", 
+            messagingSenderId: "371475369216", 
+            appId: "1:371475369216:web:3aff3d68b707f65c1e77e5", 
+            measurementId: "G-79164G85DX" 
+        };
         firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth(); const database = firebase.database();
+        const auth = firebase.auth(); 
+        const database = firebase.database();
 
         // ===== ENABLE OFFLINE PERSISTENCE (FAST) =====
         database.enablePersistence({ synchronizeTabs: false })
@@ -537,8 +547,21 @@
         let posCart = [];
 
         // ===== UTILITIES =====
-        function getBangladeshTime(ts) { if(!ts) return '-'; return new Date(ts).toLocaleString('bn-BD',{timeZone:'Asia/Dhaka',year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}); }
-        function getDateOnly(ts) { if(!ts) return '-'; return new Date(ts).toLocaleDateString('bn-BD',{timeZone:'Asia/Dhaka'}); }
+        function getBangladeshTime(ts) { 
+            if(!ts) return '-'; 
+            return new Date(ts).toLocaleString('bn-BD',{
+                timeZone:'Asia/Dhaka',
+                year:'numeric', 
+                month:'short', 
+                day:'numeric', 
+                hour:'2-digit', 
+                minute:'2-digit'
+            }); 
+        }
+        function getDateOnly(ts) { 
+            if(!ts) return '-'; 
+            return new Date(ts).toLocaleDateString('bn-BD',{timeZone:'Asia/Dhaka'}); 
+        }
 
         function toggleSidebar(){
             document.getElementById('sidebar').classList.toggle('active');
@@ -546,19 +569,53 @@
         }
 
         function showSection(id){
+            // Hide all sections
             document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
+            
+            // Update sidebar nav
             document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
             const link = document.querySelector(`[data-section="${id}"]`);
             if(link) link.classList.add('active');
+            
+            // Update bottom nav
             document.querySelectorAll('.bottom-nav-item').forEach(b=>b.classList.remove('active'));
             const bnav = document.querySelector(`.bottom-nav-item[data-section="${id}"]`);
             if(bnav) bnav.classList.add('active');
-            const titles = {dashboard:'ডেসবোর্ড', calendar:'ক্যালেন্ডার', pos:'POS', purchaseForm:'ক্রয় ফর্ম', purchaseList:'ক্রয় লিস্ট', salesForm:'বিক্রি ফর্ম', salesList:'বিক্রি লিস্ট', expenseForm:'খরচ ফর্ম', expenseList:'খরচ লিস্ট', allLists:'সকল লিস্ট', stock:'স্টক', stockHistory:'স্টক হিস্ট্রি', customers:'ক্রেতা/সাপ্লায়ার', customerLedger:'ক্রেতা লেজার', supplierLedger:'সাপ্লায়ার লেজার', returns:'রিটার্ন', reports:'রিপোর্ট', employees:'এমপ্লয়ি', accounts:'অ্যাকাউন্ট', audit:'অডিট', trash:'ট্র্যাশ', settings:'সেটিংস'};
-            document.getElementById('pageTitle').textContent = titles[id] || 'ডেসবোর্ড';
-            if(window.innerWidth<768) { if(document.getElementById('sidebar').classList.contains('active')) toggleSidebar(); }
             
-            // লোড সেকশন অনুযায়ী ডেটা
+            // Update page title
+            const titles = {
+                dashboard:'ডেসবোর্ড', 
+                calendar:'ক্যালেন্ডার', 
+                pos:'POS', 
+                purchaseForm:'ক্রয় ফর্ম', 
+                purchaseList:'ক্রয় লিস্ট',
+                salesForm:'বিক্রি ফর্ম', 
+                salesList:'বিক্রি লিস্ট', 
+                expenseForm:'খরচ ফর্ম', 
+                expenseList:'খরচ লিস্ট',
+                allLists:'সকল লিস্ট', 
+                stock:'স্টক', 
+                stockHistory:'স্টক হিস্ট্রি', 
+                customers:'ক্রেতা/সাপ্লায়ার',
+                customerLedger:'ক্রেতা লেজার', 
+                supplierLedger:'সাপ্লায়ার লেজার', 
+                returns:'রিটার্ন', 
+                reports:'রিপোর্ট',
+                employees:'এমপ্লয়ি', 
+                accounts:'অ্যাকাউন্ট', 
+                audit:'অডিট', 
+                trash:'ট্র্যাশ', 
+                settings:'সেটিংস'
+            };
+            document.getElementById('pageTitle').textContent = titles[id] || 'ডেসবোর্ড';
+            
+            // Close sidebar on mobile
+            if(window.innerWidth<768) { 
+                if(document.getElementById('sidebar').classList.contains('active')) toggleSidebar(); 
+            }
+            
+            // Load data on demand
             if(id==='dashboard') updateOverview();
             if(id==='purchaseList') loadPurchaseTable();
             if(id==='salesList') loadSalesTable();
@@ -580,8 +637,10 @@
 
         // ===== AUTH (১ সেকেন্ডে লোড) =====
         auth.onAuthStateChanged(async user=>{
-            if(user){ currentUser=user;
-                const snap = await database.ref('users/'+user.uid).once('value'); const data=snap.val();
+            if(user){ 
+                currentUser=user;
+                const snap = await database.ref('users/'+user.uid).once('value'); 
+                const data=snap.val();
                 document.getElementById('userName').textContent=data.name||'User'; 
                 document.getElementById('businessNameDisplay').textContent=data.businessName||'ব্যবসা';
                 if(data.darkMode) { document.body.classList.add('dark-mode'); }
@@ -590,14 +649,20 @@
                 loadAllData(); 
                 
                 // লোডিং স্ক্রিন ১ সেকেন্ডে হাইড
-                setTimeout(() => document.getElementById('loadingScreen').classList.add('hidden'), 1000);
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').classList.add('hidden');
+                }, 1000);
                 
-                const last = localStorage.getItem('lastSection')||'dashboard'; showSection(last);
-            } else { window.location.href='index.html'; }
+                const last = localStorage.getItem('lastSection')||'dashboard'; 
+                showSection(last);
+            } else { 
+                window.location.href='index.html'; 
+            }
         });
 
         // ===== DATA LOAD (ব্যাকগ্রাউন্ডে) =====
-        function loadAllData(){ const uid=currentUser.uid;
+        function loadAllData(){ 
+            const uid=currentUser.uid;
             // শুধু যখন প্রয়োজন তখন লোড হবে
             database.ref('purchases/'+uid).on('value',s=>{allPurchases=s.val()||{};});
             database.ref('sales/'+uid).on('value',s=>{allSales=s.val()||{};});
@@ -712,47 +777,223 @@
         function completePOSSale(){ if(posCart.length===0){ showNotification('কার্ট খালি','error'); return; } showNotification('বিলিং সফল (অফলাইন সিমুলেটেড)','success'); posCart=[]; renderPOSCart(); }
 
         // ===== TABLE LOADERS (অন-ডিমান্ড লোড) =====
-        function loadPurchaseTable(){ const tbody=document.getElementById('purchaseTableBody'); if(!tbody) return; const entries=Object.entries(allPurchases).sort((a,b)=>b[1].timestamp-a[1].timestamp); if(entries.length===0){ tbody.innerHTML=`<tr><td colspan="7" class="table-empty">কোনো ক্রয় নেই</td></tr>`; return; } tbody.innerHTML=entries.map(([id,p])=>`<tr><td><strong>${p.productName}</strong></td><td>${p.quantity}</td><td>৳${p.purchasePrice}</td><td><strong>৳${p.total}</strong></td><td>${p.supplier||'N/A'}</td><td>${getBangladeshTime(p.timestamp)}</td><td class="td-actions"><button class="btn-action btn-delete" onclick="safeDelete('purchases','${id}')"><i class="fas fa-trash"></i></button></td></tr>`).join(''); }
-        function loadSalesTable(){ const tbody=document.getElementById('salesTableBody'); if(!tbody) return; const entries=Object.entries(allSales).sort((a,b)=>b[1].timestamp-a[1].timestamp); if(entries.length===0){ tbody.innerHTML=`<tr><td colspan="8" class="table-empty">কোনো বিক্রি নেই</td></tr>`; return; } tbody.innerHTML=entries.map(([id,s])=>`<tr><td><strong>${s.productName}</strong></td><td>${s.quantity}</td><td>৳${s.price}</td><td><strong>৳${s.total}</strong></td><td><span class="badge ${s.payment==='due'?'badge-warning':'badge-success'}">${s.payment==='due'?'বাকি':'পেইড'}</span></td><td>${s.customerName||'N/A'}</td><td>${getBangladeshTime(s.timestamp)}</td><td class="td-actions"><button class="btn-action btn-delete" onclick="safeDelete('sales','${id}')"><i class="fas fa-trash"></i></button></td></tr>`).join(''); }
-        function loadExpenseTable(){ const tbody=document.getElementById('expenseTableBody'); if(!tbody) return; const entries=Object.entries(allExpenses).sort((a,b)=>b[1].timestamp-a[1].timestamp); if(entries.length===0){ tbody.innerHTML=`<tr><td colspan="5" class="table-empty">কোনো খরচ নেই</td></tr>`; return; } tbody.innerHTML=entries.map(([id,e])=>`<tr><td><strong>${e.description}</strong></td><td><strong>৳${e.amount}</strong></td><td><span class="badge badge-info">${e.category}</span></td><td>${getBangladeshTime(e.timestamp)}</td><td class="td-actions"><button class="btn-action btn-delete" onclick="safeDelete('expenses','${id}')"><i class="fas fa-trash"></i></button></td></tr>`).join(''); }
-        function loadAllTable(){ const tbody=document.getElementById('allTableBody'); if(!tbody) return; const rows=[]; Object.entries(allPurchases).forEach(([id,p])=>rows.push({ts:p.timestamp,type:'ক্রয়',desc:p.productName,amount:p.total})); Object.entries(allSales).forEach(([id,s])=>rows.push({ts:s.timestamp,type:'বিক্রি',desc:s.productName,amount:s.total})); Object.entries(allExpenses).forEach(([id,e])=>rows.push({ts:e.timestamp,type:'খরচ',desc:e.description,amount:e.amount})); rows.sort((a,b)=>b.ts-a.ts); if(rows.length===0){ tbody.innerHTML=`<tr><td colspan="4" class="table-empty">কোনো ডেটা নেই</td></tr>`; return; } tbody.innerHTML=rows.map(r=>`<tr><td><span class="badge badge-primary">${r.type}</span></td><td><strong>${r.desc}</strong></td><td><strong>৳${r.amount}</strong></td><td>${getBangladeshTime(r.ts)}</td></tr>`).join(''); }
-        function loadStockCards(){ const container=document.getElementById('stockCards'); if(!container) return; const entries=Object.entries(allProducts); if(entries.length===0){ container.innerHTML=`<div style="text-align:center;padding:30px;color:var(--gray-400);">কোনো পণ্য নেই</div>`; return; } container.innerHTML=entries.map(([key,p])=>`<div class="stock-card"><div class="stock-card-header"><h3>${p.name}</h3><span class="badge ${p.stock>0?'badge-success':'badge-danger'}">${p.stock}</span></div><div class="stock-details">ক্রয়: ৳${p.purchasePrice} | বিক্রয়: ৳${p.salePrice}</div></div>`).join(''); }
-        function loadStockHistory(){ const tbody=document.getElementById('stockHistoryBody'); if(!tbody) return; const entries=Object.entries(allStockHistory).sort((a,b)=>b[1].timestamp-a[1].timestamp); if(entries.length===0){ tbody.innerHTML=`<tr><td colspan="4" class="table-empty">কোনো ইতিহাস নেই</td></tr>`; return; } tbody.innerHTML=entries.map(([id,h])=>`<tr><td><strong>${h.productName}</strong></td><td><span class="badge ${h.type==='IN'?'badge-success':'badge-danger'}">${h.type==='IN'?'ইন':'আউট'}</span></td><td>${h.quantity}</td><td>${getBangladeshTime(h.timestamp)}</td></tr>`).join(''); }
-        function loadCustomerTable(){ const tbody=document.getElementById('customerTableBody'); if(!tbody) return; const entries=Object.entries(allCustomers); if(entries.length===0){ tbody.innerHTML=`<tr><td colspan="5" class="table-empty">কোনো ক্রেতা/সাপ্লায়ার নেই</td></tr>`; return; } tbody.innerHTML=entries.map(([key,c])=>`<tr><td><strong>${c.name}</strong></td><td>${c.mobile||'N/A'}</td><td><span class="badge badge-info">${c.type||'customer'}</span></td><td><strong>৳${c.totalDue||0}</strong></td><td class="td-actions"><button class="btn-action btn-pay" onclick="payDue('${key}')"><i class="fas fa-hand-holding-usd"></i></button></td></tr>`).join(''); }
-        function loadReturnTable(){ const tbody=document.getElementById('returnTableBody'); if(!tbody) return; const entries=Object.entries(allReturns).sort((a,b)=>b[1].timestamp-a[1].timestamp); if(entries.length===0){ tbody.innerHTML=`<tr><td colspan="5" class="table-empty">কোনো রিটার্ন নেই</td></tr>`; return; } tbody.innerHTML=entries.map(([id,r])=>`<tr><td><span class="badge ${r.type==='sales'?'badge-warning':'badge-info'}">${r.type}</span></td><td>${r.product}</td><td>${r.quantity}</td><td>৳${r.amount}</td><td>${getBangladeshTime(r.timestamp)}</td></tr>`).join(''); }
-        function loadTrashTable(){ const tbody=document.getElementById('trashTableBody'); if(!tbody) return; const entries=Object.entries(allTrash).sort((a,b)=>b[1].deletedAt-a[1].deletedAt); if(entries.length===0){ tbody.innerHTML=`<tr><td colspan="5" class="table-empty">ট্র্যাশ খালি</td></tr>`; return; } tbody.innerHTML=entries.map(([key,t])=>`<tr><td><span class="badge badge-info">${t.originalCollection}</span></td><td>${t.data.productName||t.data.description||t.data.name||'N/A'}</td><td>৳${t.data.total||t.data.amount||t.data.totalDue||0}</td><td>${getBangladeshTime(t.deletedAt)}</td><td class="td-actions"><button class="btn-action btn-success" onclick="restoreFromTrash('${key}')"><i class="fas fa-undo-alt"></i></button></td></tr>`).join(''); }
-        function loadEmployeeTable(){ const tbody=document.getElementById('employeeTableBody'); if(!tbody) return; const entries=Object.entries(allEmployees); if(entries.length===0){ tbody.innerHTML=`<tr><td colspan="4" class="table-empty">কোনো এমপ্লয়ি নেই</td></tr>`; return; } tbody.innerHTML=entries.map(([key,e])=>`<tr><td>${e.name}</td><td>${e.commission||0}%</td><td>৳${Object.values(allSales).filter(s=>s.employee===e.name).reduce((sum,s)=>sum+s.total,0).toFixed(2)}</td><td>৳${(Object.values(allSales).filter(s=>s.employee===e.name).reduce((sum,s)=>sum+s.total,0)*(e.commission/100)).toFixed(2)}</td></tr>`).join(''); }
-        function loadAccounts(){ const tbody=document.getElementById('accountTableBody'); if(!tbody) return; const entries=Object.entries(allAccounts); if(entries.length===0){ tbody.innerHTML=`<tr><td colspan="2" class="table-empty">কোনো অ্যাকাউন্ট নেই</td></tr>`; return; } tbody.innerHTML=entries.map(([key,a])=>`<tr><td>${a.name}</td><td>৳${a.balance}</td></tr>`).join(''); }
-        function loadAuditLog(){ const tbody=document.getElementById('auditTableBody'); if(!tbody) return; const entries=Object.entries(allAudit).sort((a,b)=>b[1].timestamp-a[1].timestamp); if(entries.length===0){ tbody.innerHTML=`<tr><td colspan="3" class="table-empty">কোনো অডিট লগ নেই</td></tr>`; return; } tbody.innerHTML=entries.map(([id,a])=>`<tr><td>${getBangladeshTime(a.timestamp)}</td><td>${a.event}</td><td>${a.description}</td></tr>`).join(''); }
+        function loadPurchaseTable(){ 
+            const tbody=document.getElementById('purchaseTableBody'); 
+            if(!tbody) return; 
+            const entries=Object.entries(allPurchases).sort((a,b)=>b[1].timestamp-a[1].timestamp); 
+            if(entries.length===0){ 
+                tbody.innerHTML=`<tr><td colspan="7" class="table-empty">কোনো ক্রয় নেই</td></tr>`; 
+                return; 
+            } 
+            tbody.innerHTML=entries.map(([id,p])=>`<tr><td><strong>${p.productName}</strong></td><td>${p.quantity}</td><td>৳${p.purchasePrice}</td><td><strong>৳${p.total}</strong></td><td>${p.supplier||'N/A'}</td><td>${getBangladeshTime(p.timestamp)}</td><td class="td-actions"><button class="btn-action btn-delete" onclick="safeDelete('purchases','${id}')"><i class="fas fa-trash"></i></button></td></tr>`).join(''); 
+        }
+        function loadSalesTable(){ 
+            const tbody=document.getElementById('salesTableBody'); 
+            if(!tbody) return; 
+            const entries=Object.entries(allSales).sort((a,b)=>b[1].timestamp-a[1].timestamp); 
+            if(entries.length===0){ 
+                tbody.innerHTML=`<tr><td colspan="8" class="table-empty">কোনো বিক্রি নেই</td></tr>`; 
+                return; 
+            } 
+            tbody.innerHTML=entries.map(([id,s])=>`<tr><td><strong>${s.productName}</strong></td><td>${s.quantity}</td><td>৳${s.price}</td><td><strong>৳${s.total}</strong></td><td><span class="badge ${s.payment==='due'?'badge-warning':'badge-success'}">${s.payment==='due'?'বাকি':'পেইড'}</span></td><td>${s.customerName||'N/A'}</td><td>${getBangladeshTime(s.timestamp)}</td><td class="td-actions"><button class="btn-action btn-delete" onclick="safeDelete('sales','${id}')"><i class="fas fa-trash"></i></button></td></tr>`).join(''); 
+        }
+        function loadExpenseTable(){ 
+            const tbody=document.getElementById('expenseTableBody'); 
+            if(!tbody) return; 
+            const entries=Object.entries(allExpenses).sort((a,b)=>b[1].timestamp-a[1].timestamp); 
+            if(entries.length===0){ 
+                tbody.innerHTML=`<tr><td colspan="5" class="table-empty">কোনো খরচ নেই</td></tr>`; 
+                return; 
+            } 
+            tbody.innerHTML=entries.map(([id,e])=>`<tr><td><strong>${e.description}</strong></td><td><strong>৳${e.amount}</strong></td><td><span class="badge badge-info">${e.category}</span></td><td>${getBangladeshTime(e.timestamp)}</td><td class="td-actions"><button class="btn-action btn-delete" onclick="safeDelete('expenses','${id}')"><i class="fas fa-trash"></i></button></td></tr>`).join(''); 
+        }
+        function loadAllTable(){ 
+            const tbody=document.getElementById('allTableBody'); 
+            if(!tbody) return; 
+            const rows=[]; 
+            Object.entries(allPurchases).forEach(([id,p])=>rows.push({ts:p.timestamp,type:'ক্রয়',desc:p.productName,amount:p.total})); 
+            Object.entries(allSales).forEach(([id,s])=>rows.push({ts:s.timestamp,type:'বিক্রি',desc:s.productName,amount:s.total})); 
+            Object.entries(allExpenses).forEach(([id,e])=>rows.push({ts:e.timestamp,type:'খরচ',desc:e.description,amount:e.amount})); 
+            rows.sort((a,b)=>b.ts-a.ts); 
+            if(rows.length===0){ 
+                tbody.innerHTML=`<tr><td colspan="4" class="table-empty">কোনো ডেটা নেই</td></tr>`; 
+                return; 
+            } 
+            tbody.innerHTML=rows.map(r=>`<tr><td><span class="badge badge-primary">${r.type}</span></td><td><strong>${r.desc}</strong></td><td><strong>৳${r.amount}</strong></td><td>${getBangladeshTime(r.ts)}</td></tr>`).join(''); 
+        }
+        function loadStockCards(){ 
+            const container=document.getElementById('stockCards'); 
+            if(!container) return; 
+            const entries=Object.entries(allProducts); 
+            if(entries.length===0){ 
+                container.innerHTML=`<div style="text-align:center;padding:30px;color:var(--gray-400);">কোনো পণ্য নেই</div>`; 
+                return; 
+            } 
+            container.innerHTML=entries.map(([key,p])=>`<div class="stock-card"><div class="stock-card-header"><h3>${p.name}</h3><span class="badge ${p.stock>0?'badge-success':'badge-danger'}">${p.stock}</span></div><div class="stock-details">ক্রয়: ৳${p.purchasePrice} | বিক্রয়: ৳${p.salePrice}</div></div>`).join(''); 
+        }
+        function loadStockHistory(){ 
+            const tbody=document.getElementById('stockHistoryBody'); 
+            if(!tbody) return; 
+            const entries=Object.entries(allStockHistory).sort((a,b)=>b[1].timestamp-a[1].timestamp); 
+            if(entries.length===0){ 
+                tbody.innerHTML=`<tr><td colspan="4" class="table-empty">কোনো ইতিহাস নেই</td></tr>`; 
+                return; 
+            } 
+            tbody.innerHTML=entries.map(([id,h])=>`<tr><td><strong>${h.productName}</strong></td><td><span class="badge ${h.type==='IN'?'badge-success':'badge-danger'}">${h.type==='IN'?'ইন':'আউট'}</span></td><td>${h.quantity}</td><td>${getBangladeshTime(h.timestamp)}</td></tr>`).join(''); 
+        }
+        function loadCustomerTable(){ 
+            const tbody=document.getElementById('customerTableBody'); 
+            if(!tbody) return; 
+            const entries=Object.entries(allCustomers); 
+            if(entries.length===0){ 
+                tbody.innerHTML=`<tr><td colspan="5" class="table-empty">কোনো ক্রেতা/সাপ্লায়ার নেই</td></tr>`; 
+                return; 
+            } 
+            tbody.innerHTML=entries.map(([key,c])=>`<tr><td><strong>${c.name}</strong></td><td>${c.mobile||'N/A'}</td><td><span class="badge badge-info">${c.type||'customer'}</span></td><td><strong>৳${c.totalDue||0}</strong></td><td class="td-actions"><button class="btn-action btn-pay" onclick="payDue('${key}')"><i class="fas fa-hand-holding-usd"></i></button></td></tr>`).join(''); 
+        }
+        function loadReturnTable(){ 
+            const tbody=document.getElementById('returnTableBody'); 
+            if(!tbody) return; 
+            const entries=Object.entries(allReturns).sort((a,b)=>b[1].timestamp-a[1].timestamp); 
+            if(entries.length===0){ 
+                tbody.innerHTML=`<tr><td colspan="5" class="table-empty">কোনো রিটার্ন নেই</td></tr>`; 
+                return; 
+            } 
+            tbody.innerHTML=entries.map(([id,r])=>`<tr><td><span class="badge ${r.type==='sales'?'badge-warning':'badge-info'}">${r.type}</span></td><td>${r.product}</td><td>${r.quantity}</td><td>৳${r.amount}</td><td>${getBangladeshTime(r.timestamp)}</td></tr>`).join(''); 
+        }
+        function loadTrashTable(){ 
+            const tbody=document.getElementById('trashTableBody'); 
+            if(!tbody) return; 
+            const entries=Object.entries(allTrash).sort((a,b)=>b[1].deletedAt-a[1].deletedAt); 
+            if(entries.length===0){ 
+                tbody.innerHTML=`<tr><td colspan="5" class="table-empty">ট্র্যাশ খালি</td></tr>`; 
+                return; 
+            } 
+            tbody.innerHTML=entries.map(([key,t])=>`<tr><td><span class="badge badge-info">${t.originalCollection}</span></td><td>${t.data.productName||t.data.description||t.data.name||'N/A'}</td><td>৳${t.data.total||t.data.amount||t.data.totalDue||0}</td><td>${getBangladeshTime(t.deletedAt)}</td><td class="td-actions"><button class="btn-action btn-success" onclick="restoreFromTrash('${key}')"><i class="fas fa-undo-alt"></i></button></td></tr>`).join(''); 
+        }
+        function loadEmployeeTable(){ 
+            const tbody=document.getElementById('employeeTableBody'); 
+            if(!tbody) return; 
+            const entries=Object.entries(allEmployees); 
+            if(entries.length===0){ 
+                tbody.innerHTML=`<tr><td colspan="4" class="table-empty">কোনো এমপ্লয়ি নেই</td></tr>`; 
+                return; 
+            } 
+            tbody.innerHTML=entries.map(([key,e])=>`<tr><td>${e.name}</td><td>${e.commission||0}%</td><td>৳${Object.values(allSales).filter(s=>s.employee===e.name).reduce((sum,s)=>sum+s.total,0).toFixed(2)}</td><td>৳${(Object.values(allSales).filter(s=>s.employee===e.name).reduce((sum,s)=>sum+s.total,0)*(e.commission/100)).toFixed(2)}</td></tr>`).join(''); 
+        }
+        function loadAccounts(){ 
+            const tbody=document.getElementById('accountTableBody'); 
+            if(!tbody) return; 
+            const entries=Object.entries(allAccounts); 
+            if(entries.length===0){ 
+                tbody.innerHTML=`<tr><td colspan="2" class="table-empty">কোনো অ্যাকাউন্ট নেই</td></tr>`; 
+                return; 
+            } 
+            tbody.innerHTML=entries.map(([key,a])=>`<tr><td>${a.name}</td><td>৳${a.balance}</td></tr>`).join(''); 
+        }
+        function loadAuditLog(){ 
+            const tbody=document.getElementById('auditTableBody'); 
+            if(!tbody) return; 
+            const entries=Object.entries(allAudit).sort((a,b)=>b[1].timestamp-a[1].timestamp); 
+            if(entries.length===0){ 
+                tbody.innerHTML=`<tr><td colspan="3" class="table-empty">কোনো অডিট লগ নেই</td></tr>`; 
+                return; 
+            } 
+            tbody.innerHTML=entries.map(([id,a])=>`<tr><td>${getBangladeshTime(a.timestamp)}</td><td>${a.event}</td><td>${a.description}</td></tr>`).join(''); 
+        }
 
         // ===== LEDGER =====
-        function populateLedgerDropdown(){ const sel=document.getElementById('ledgerCustomer'); sel.innerHTML='<option value="">নির্বাচন করুন</option>'; Object.entries(allCustomers).forEach(([key,c])=>{if(c.type==='customer') sel.innerHTML+=`<option value="${key}">${c.name}</option>`;}); }
-        function populateSupplierDropdown(){ const sel=document.getElementById('ledgerSupplier'); sel.innerHTML='<option value="">নির্বাচন করুন</option>'; Object.entries(allCustomers).forEach(([key,c])=>{if(c.type==='supplier') sel.innerHTML+=`<option value="${key}">${c.name}</option>`;}); }
-        function loadLedger(){ const key=document.getElementById('ledgerCustomer').value; const container=document.getElementById('ledgerData'); if(!key){ container.innerHTML=''; return; } const customer=allCustomers[key]; let html=`<h4>${customer.name} - লেজার</h4><table class="data-table"><thead><tr><th>তারিখ</th><th>বিবরণ</th><th>ডেবিট</th><th>ক্রেডিট</th><th>ব্যালেন্স</th></tr></thead><tbody>`; let balance=0; Object.entries(allSales).forEach(([id,s])=>{if(s.customerName===customer.name){balance+=s.total; html+=`<tr><td>${getDateOnly(s.timestamp)}</td><td>বিক্রি: ${s.productName}</td><td>৳${s.total}</td><td></td><td>৳${balance}</td></tr>`;}}); html+=`</tbody></table>`; container.innerHTML=html; }
-        function loadSupplierLedger(){ const key=document.getElementById('ledgerSupplier').value; const container=document.getElementById('supplierLedgerData'); if(!key){ container.innerHTML=''; return; } const supplier=allCustomers[key]; let html=`<h4>${supplier.name} - লেজার</h4><table class="data-table"><thead><tr><th>তারিখ</th><th>বিবরণ</th><th>ডেবিট</th><th>ক্রেডিট</th><th>ব্যালেন্স</th></tr></thead><tbody>`; let balance=0; Object.entries(allPurchases).forEach(([id,p])=>{if(p.supplier===supplier.name){balance+=p.total; html+=`<tr><td>${getDateOnly(p.timestamp)}</td><td>ক্রয়: ${p.productName}</td><td>৳${p.total}</td><td></td><td>৳${balance}</td></tr>`;}}); html+=`</tbody></table>`; container.innerHTML=html; }
+        function populateLedgerDropdown(){ 
+            const sel=document.getElementById('ledgerCustomer'); 
+            sel.innerHTML='<option value="">নির্বাচন করুন</option>'; 
+            Object.entries(allCustomers).forEach(([key,c])=>{
+                if(c.type==='customer') sel.innerHTML+=`<option value="${key}">${c.name}</option>`;
+            }); 
+        }
+        function populateSupplierDropdown(){ 
+            const sel=document.getElementById('ledgerSupplier'); 
+            sel.innerHTML='<option value="">নির্বাচন করুন</option>'; 
+            Object.entries(allCustomers).forEach(([key,c])=>{
+                if(c.type==='supplier') sel.innerHTML+=`<option value="${key}">${c.name}</option>`;
+            }); 
+        }
+        function loadLedger(){ 
+            const key=document.getElementById('ledgerCustomer').value; 
+            const container=document.getElementById('ledgerData'); 
+            if(!key){ container.innerHTML=''; return; } 
+            const customer=allCustomers[key]; 
+            let html=`<h4>${customer.name} - লেজার</h4><table class="data-table"><thead><tr><th>তারিখ</th><th>বিবরণ</th><th>ডেবিট</th><th>ক্রেডিট</th><th>ব্যালেন্স</th></tr></thead><tbody>`; 
+            let balance=0; 
+            Object.entries(allSales).forEach(([id,s])=>{
+                if(s.customerName===customer.name){
+                    balance+=s.total; 
+                    html+=`<tr><td>${getDateOnly(s.timestamp)}</td><td>বিক্রি: ${s.productName}</td><td>৳${s.total}</td><td></td><td>৳${balance}</td></tr>`;
+                }
+            }); 
+            html+=`</tbody></table>`; 
+            container.innerHTML=html; 
+        }
+        function loadSupplierLedger(){ 
+            const key=document.getElementById('ledgerSupplier').value; 
+            const container=document.getElementById('supplierLedgerData'); 
+            if(!key){ container.innerHTML=''; return; } 
+            const supplier=allCustomers[key]; 
+            let html=`<h4>${supplier.name} - লেজার</h4><table class="data-table"><thead><tr><th>তারিখ</th><th>বিবরণ</th><th>ডেবিট</th><th>ক্রেডিট</th><th>ব্যালেন্স</th></tr></thead><tbody>`; 
+            let balance=0; 
+            Object.entries(allPurchases).forEach(([id,p])=>{
+                if(p.supplier===supplier.name){
+                    balance+=p.total; 
+                    html+=`<tr><td>${getDateOnly(p.timestamp)}</td><td>ক্রয়: ${p.productName}</td><td>৳${p.total}</td><td></td><td>৳${balance}</td></tr>`;
+                }
+            }); 
+            html+=`</tbody></table>`; 
+            container.innerHTML=html; 
+        }
 
         // ===== SAFE DELETE =====
-        async function safeDelete(collection, id){ showNotification('অফলাইনে ডিলিট সিমুলেটেড','info'); }
-        async function restoreFromTrash(key){ showNotification('রিস্টোর সিমুলেটেড','info'); }
+        async function safeDelete(collection, id){ 
+            showNotification('অফলাইনে ডিলিট সিমুলেটেড','info'); 
+        }
+        async function restoreFromTrash(key){ 
+            showNotification('রিস্টোর সিমুলেটেড','info'); 
+        }
 
         // ===== QUICK ACTIONS =====
-        async function payDue(key){ const amount=prompt('কত টাকা পরিশোধ?'); if(amount&&!isNaN(amount)){ showNotification('পরিশোধ সিমুলেটেড','success'); } }
+        async function payDue(key){ 
+            const amount=prompt('কত টাকা পরিশোধ?'); 
+            if(amount&&!isNaN(amount)){ 
+                showNotification('পরিশোধ সিমুলেটেড','success'); 
+            } 
+        }
 
         // ===== NOTIFICATION =====
         function showNotification(msg,type='info'){ 
-            const c=document.createElement('div'); c.className='notification-container';
-            const d=document.createElement('div'); d.className=`notification notification-${type}`;
+            const c=document.createElement('div'); 
+            c.className='notification-container';
+            const d=document.createElement('div'); 
+            d.className=`notification notification-${type}`;
             d.innerHTML=`<i class="fas ${type==='success'?'fa-check-circle':'fa-exclamation-circle'}"></i><span>${msg}</span>`;
-            c.appendChild(d); document.body.appendChild(c); setTimeout(()=>c.remove(),3000);
+            c.appendChild(d); 
+            document.body.appendChild(c); 
+            setTimeout(()=>c.remove(),3000);
         }
 
         // ===== LOGOUT & REFRESH =====
-        async function logout(){ await auth.signOut(); window.location.href='index.html'; }
-        function refreshData(){ showNotification('ডেটা রিফ্রেশ করা হচ্ছে...','info'); }
-        function toggleDarkMode(){ document.body.classList.toggle('dark-mode'); }
+        async function logout(){ 
+            await auth.signOut(); 
+            window.location.href='index.html'; 
+        }
+        function refreshData(){ 
+            showNotification('ডেটা রিফ্রেশ করা হচ্ছে...','info'); 
+        }
+        function toggleDarkMode(){ 
+            document.body.classList.toggle('dark-mode'); 
+        }
 
         // ===== SALES FORM HELPERS =====
-        function updateSalesPrice(){} function calculateTotal(){} function toggleDueField(){}
+        function updateSalesPrice(){} 
+        function calculateTotal(){} 
+        function toggleDueField(){}
     </script>
 </body>
 </html>
