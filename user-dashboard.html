@@ -134,20 +134,14 @@
         .section { display: none; animation: fadeIn 0.25s; }
         .section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
         .section-header h2 { font-size: 18px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
-
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 20px; }
-        .stat-card {
-            background: var(--bg-card); padding: 14px 16px; border-radius: var(--radius); box-shadow: var(--shadow-sm);
-            transition: var(--transition); border: 1px solid var(--border-color);
-        }
+        .stat-card { background: var(--bg-card); padding: 14px 16px; border-radius: var(--radius); box-shadow: var(--shadow-sm); transition: var(--transition); border: 1px solid var(--border-color); }
         .stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
         .stat-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-bottom: 8px; }
         .stat-info h4 { font-size: 11px; color: var(--gray-400); font-weight: 500; margin-bottom: 3px; }
         .stat-info p { font-size: 17px; font-weight: 700; color: var(--text-primary); }
-
         .card { background: var(--bg-card); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 18px; margin-bottom: 18px; border: 1px solid var(--border-color); }
         .table-container { background: var(--bg-card); border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; border: 1px solid var(--border-color); }
         .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -173,12 +167,25 @@
         .badge-success { background: #d1fae5; color: #065f46; }
         .badge-warning { background: #fef3c7; color: #92400e; }
         .badge-danger { background: #fee2e2; color: #991b1b; }
-        .search-bar { display: flex; align-items: center; background: var(--light); border-radius: 20px; padding: 6px 12px; gap: 6px; max-width: 200px; border: 1px solid var(--border-color); }
+        .search-bar { display: flex; align-items: center; background: var(--light); border-radius: 20px; padding: 6px 12px; gap: 6px; max-width: 220px; border: 1px solid var(--border-color); }
         .search-bar input { border: none; background: none; outline: none; width: 100%; font-size: 12px; }
 
         .notification-container { position: fixed; top: 16px; right: 16px; z-index: 4000; display: flex; flex-direction: column; gap: 8px; }
         .notification { padding: 12px 16px; border-radius: 12px; background: white; box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 10px; animation: slideIn 0.3s ease; min-width: 240px; border-left: 4px solid var(--primary); font-size: 13px; font-weight: 500; }
         @keyframes slideIn { from { opacity: 0; transform: translateX(60px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* Professional list enhancements */
+        .list-item { display: flex; align-items: center; padding: 12px 14px; border-bottom: 1px solid var(--border-color); transition: var(--transition); }
+        .list-item:hover { background: var(--hover-bg); }
+        .list-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 16px; flex-shrink: 0; }
+        .list-details { flex: 1; }
+        .list-title { font-weight: 600; font-size: 14px; }
+        .list-sub { font-size: 12px; color: var(--gray-400); }
+
+        /* Stock cards */
+        .stock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+        .stock-card { background: var(--bg-card); border-radius: var(--radius); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); padding: 14px; transition: var(--transition); }
+        .stock-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
 
         @media (max-width: 768px) {
             .sidebar { transform: translateX(-100%); }
@@ -187,6 +194,7 @@
             .menu-toggle { display: block; }
             .header-right .user-email, .header-right .user-name { display: none; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .stock-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -210,6 +218,7 @@
             <li class="nav-item"><a class="nav-link" data-section="salesList" onclick="showSection('salesList')"><i class="fas fa-receipt"></i> বিক্রি লিস্ট</a></li>
             <li class="nav-item"><a class="nav-link" data-section="expenseForm" onclick="showSection('expenseForm')"><i class="fas fa-file-invoice"></i> খরচ ফর্ম</a></li>
             <li class="nav-item"><a class="nav-link" data-section="expenseList" onclick="showSection('expenseList')"><i class="fas fa-wallet"></i> খরচ লিস্ট</a></li>
+            <li class="nav-item"><a class="nav-link" data-section="allLists" onclick="showSection('allLists')"><i class="fas fa-layer-group"></i> সকল লিস্ট</a></li>
             <li class="nav-item"><a class="nav-link" data-section="stock" onclick="showSection('stock')"><i class="fas fa-boxes-stacked"></i> স্টক</a></li>
             <li class="nav-item"><a class="nav-link" data-section="customers" onclick="showSection('customers')"><i class="fas fa-users"></i> ক্রেতার লিস্ট</a></li>
             <li class="nav-item"><a class="nav-link" data-section="reports" onclick="showSection('reports')"><i class="fas fa-chart-pie"></i> রিপোর্ট</a></li>
@@ -239,10 +248,7 @@
                             <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> লগআউট</a>
                         </div>
                     </div>
-                    <div>
-                        <div class="user-name" id="userName">User</div>
-                        <div class="user-email" id="userEmail">user@email.com</div>
-                    </div>
+                    <div><div class="user-name" id="userName">User</div><div class="user-email" id="userEmail">user@email.com</div></div>
                 </div>
             </div>
         </header>
@@ -306,10 +312,16 @@
             <div style="overflow-x:auto;"><table class="data-table"><thead><tr><th>তারিখ ও সময়</th><th>বিবরণ</th><th>ক্যাটাগরি</th><th>পরিমাণ</th><th></th></tr></thead><tbody id="expenseList"></tbody></table></div></div>
         </section>
 
+        <section id="allLists" class="section">
+            <div class="section-header"><h2><i class="fas fa-layer-group" style="color:var(--primary);"></i> সকল লিস্ট</h2></div>
+            <div class="table-container"><div class="card-header" style="padding:10px 14px;"><h3>সাম্প্রতিক কার্যক্রম</h3><div class="search-bar"><i class="fas fa-search"></i><input type="text" id="allListSearch" placeholder="খুঁজুন..." onkeyup="searchTable('allListSearch','allListBody')"></div></div>
+            <div style="overflow-x:auto;"><table class="data-table"><thead><tr><th>তারিখ ও সময়</th><th>ধরণ</th><th>বিবরণ</th><th>পরিমাণ</th></tr></thead><tbody id="allListBody"></tbody></table></div></div>
+        </section>
+
         <section id="stock" class="section">
             <div class="section-header"><h2><i class="fas fa-boxes-stacked" style="color:var(--primary);"></i> স্টক</h2></div>
-            <div class="table-container"><div class="card-header" style="padding:10px 14px;"><h3>স্টক তালিকা</h3><div class="search-bar"><i class="fas fa-search"></i><input type="text" id="stockSearch" placeholder="খুঁজুন..." onkeyup="searchTable('stockSearch','stockList')"></div></div>
-            <div style="overflow-x:auto;"><table class="data-table"><thead><tr><th>পণ্য</th><th>স্টক</th><th>বিক্রি</th><th>ক্রয় মূল্য</th><th>বিক্রয় মূল্য</th><th></th></tr></thead><tbody id="stockList"></tbody></table></div></div>
+            <div class="card" style="padding:12px;"><div class="search-bar" style="max-width:100%; margin-bottom:12px;"><i class="fas fa-search"></i><input type="text" id="stockSearch" placeholder="স্টক খুঁজুন..." onkeyup="filterStockCards()"></div>
+            <div class="stock-grid" id="stockCards"></div></div>
         </section>
 
         <section id="customers" class="section">
@@ -347,31 +359,15 @@
                     <div class="form-group"><label>মোবাইল</label><input type="tel" id="settingsMobile"></div>
                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> সেভ করুন</button>
                 </form>
-                <hr style="margin:20px 0; border-color:var(--border-color);">
-                <h4 style="margin-bottom:12px;">🎨 থিম ও ভাষা</h4>
-                <div class="form-group"><label>থিম</label><select id="themeSelect" onchange="applyTheme(this.value)"><option value="light">লাইট</option><option value="dark">ডার্ক</option></select></div>
-                <div class="form-group"><label>ভাষা</label><select id="langSelect"><option value="bn">বাংলা</option><option value="en">English</option></select></div>
-                <div class="form-group"><label>ফন্ট সাইজ</label><input type="range" min="12" max="20" value="14" id="fontSizeRange" oninput="document.documentElement.style.setProperty('--font-size-base', this.value+'px')"></div>
             </div>
         </section>
     </main>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyB16ZrdZ2IY_R8aSZipz-O6SelEblngJLE",
-            authDomain: "marketing-calculation.firebaseapp.com",
-            databaseURL: "https://marketing-calculation-default-rtdb.firebaseio.com",
-            projectId: "marketing-calculation",
-            storageBucket: "marketing-calculation.firebasestorage.app",
-            messagingSenderId: "371475369216",
-            appId: "1:371475369216:web:3aff3d68b707f65c1e77e5",
-            measurementId: "G-79164G85DX"
-        };
+        const firebaseConfig = { apiKey: "AIzaSyB16ZrdZ2IY_R8aSZipz-O6SelEblngJLE", authDomain: "marketing-calculation.firebaseapp.com", databaseURL: "https://marketing-calculation-default-rtdb.firebaseio.com", projectId: "marketing-calculation", storageBucket: "marketing-calculation.firebasestorage.app", messagingSenderId: "371475369216", appId: "1:371475369216:web:3aff3d68b707f65c1e77e5", measurementId: "G-79164G85DX" };
         firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const database = firebase.database();
-        let currentUser = null;
-        let allProducts = {}, allPurchases = {}, allSales = {}, allExpenses = {}, allCustomers = {};
+        const auth = firebase.auth(); const database = firebase.database();
+        let currentUser = null; let allProducts = {}, allPurchases = {}, allSales = {}, allExpenses = {}, allCustomers = {};
 
         function getBangladeshTime(timestamp) { if(!timestamp) return '-'; return new Date(timestamp).toLocaleString('bn-BD',{timeZone:'Asia/Dhaka', year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'}); }
         function showSection(sectionId){
@@ -380,83 +376,39 @@
             document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
             const link = document.querySelector(`[data-section="${sectionId}"]`); if(link) link.classList.add('active');
             localStorage.setItem('lastSection', sectionId);
-            const titles = {dashboard:'ডেসবোর্ড', purchaseForm:'ক্রয় ফর্ম', purchaseList:'ক্রয় লিস্ট', salesForm:'বিক্রি ফর্ম', salesList:'বিক্রি লিস্ট', expenseForm:'খরচ ফর্ম', expenseList:'খরচ লিস্ট', stock:'স্টক', customers:'ক্রেতার লিস্ট', reports:'রিপোর্ট', profile:'প্রোফাইল', settings:'সেটিংস'};
+            const titles = {dashboard:'ডেসবোর্ড', purchaseForm:'ক্রয় ফর্ম', purchaseList:'ক্রয় লিস্ট', salesForm:'বিক্রি ফর্ম', salesList:'বিক্রি লিস্ট', expenseForm:'খরচ ফর্ম', expenseList:'খরচ লিস্ট', allLists:'সকল লিস্ট', stock:'স্টক', customers:'ক্রেতার লিস্ট', reports:'রিপোর্ট', profile:'প্রোফাইল', settings:'সেটিংস'};
             document.getElementById('pageTitle').textContent = titles[sectionId] || 'ডেসবোর্ড';
             if(window.innerWidth<=768) document.getElementById('sidebar').classList.remove('active');
             if(sectionId==='dashboard'||sectionId==='reports') updateOverview();
+            if(sectionId==='allLists') loadAllLists();
+            if(sectionId==='stock') loadStockCards();
+            if(sectionId==='customers') loadCustomerList();
         }
         function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('active'); }
         document.addEventListener('click', function(e){ if(window.innerWidth<=768 && document.getElementById('sidebar').classList.contains('active') && !e.target.closest('.sidebar') && !e.target.closest('.menu-toggle')){ document.getElementById('sidebar').classList.remove('active'); }});
-
-        // Theme
-        function applyTheme(theme){
-            const root = document.documentElement;
-            if(theme==='dark'){
-                root.style.setProperty('--bg-body','#0f172a');
-                root.style.setProperty('--bg-card','#1e293b');
-                root.style.setProperty('--text-primary','#f1f5f9');
-                root.style.setProperty('--text-secondary','#cbd5e1');
-                root.style.setProperty('--border-color','#334155');
-                root.style.setProperty('--sidebar-bg','#1e293b');
-                root.style.setProperty('--sidebar-text','#cbd5e1');
-                root.style.setProperty('--hover-bg','#334155');
-                root.style.setProperty('--light','#1e293b');
-            } else {
-                root.style.setProperty('--bg-body','#f1f5f9');
-                root.style.setProperty('--bg-card','#ffffff');
-                root.style.setProperty('--text-primary','#0f172a');
-                root.style.setProperty('--text-secondary','#475569');
-                root.style.setProperty('--border-color','#e2e8f0');
-                root.style.setProperty('--sidebar-bg','#ffffff');
-                root.style.setProperty('--sidebar-text','#475569');
-                root.style.setProperty('--hover-bg','#f1f5f9');
-                root.style.setProperty('--light','#f8fafc');
-            }
-            localStorage.setItem('theme', theme);
-        }
-        const savedTheme = localStorage.getItem('theme')||'light';
-        document.getElementById('themeSelect').value = savedTheme; applyTheme(savedTheme);
-
-        async function uploadAvatar(input){
-            const file = input.files[0]; if(!file) return;
-            const reader = new FileReader();
-            reader.onload = async (e)=>{
-                const dataUrl = e.target.result;
-                document.getElementById('userAvatar').innerHTML = `<img src="${dataUrl}">`;
-                document.getElementById('profileAvatar').innerHTML = `<img src="${dataUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
-                if(currentUser) await database.ref('users/'+currentUser.uid).update({avatarUrl: dataUrl});
-                showNotification('ছবি আপডেট হয়েছে','success');
-            };
-            reader.readAsDataURL(file);
-        }
 
         auth.onAuthStateChanged(async user=>{
             if(user){ currentUser=user;
                 const snap = await database.ref('users/'+user.uid).once('value'); const data=snap.val();
                 if(!data||data.role==='admin'){ window.location.href='admin-dashboard.html'; return; }
-                document.getElementById('userName').textContent=data.name||'User';
-                document.getElementById('userEmail').textContent=data.email||'';
-                document.getElementById('businessNameDisplay').textContent=data.businessName||'ব্যবসা';
-                document.getElementById('settingsName').value=data.name||'';
-                document.getElementById('settingsBusinessName').value=data.businessName||'';
-                document.getElementById('settingsMobile').value=data.mobileNumber||'';
+                document.getElementById('userName').textContent=data.name||'User'; document.getElementById('userEmail').textContent=data.email||''; document.getElementById('businessNameDisplay').textContent=data.businessName||'ব্যবসা';
+                document.getElementById('settingsName').value=data.name||''; document.getElementById('settingsBusinessName').value=data.businessName||''; document.getElementById('settingsMobile').value=data.mobileNumber||'';
                 document.getElementById('profileName').value=data.name||''; document.getElementById('profileEmail').value=data.email||''; document.getElementById('profileBusinessName').value=data.businessName||''; document.getElementById('profileMobile').value=data.mobileNumber||''; document.getElementById('profileDisplayName').textContent=data.name||'User';
                 if(data.avatarUrl){ document.getElementById('userAvatar').innerHTML=`<img src="${data.avatarUrl}">`; document.getElementById('profileAvatar').innerHTML=`<img src="${data.avatarUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`; }
-                loadAllData();
-                const last = localStorage.getItem('lastSection')||'dashboard'; showSection(last);
+                loadAllData(); const last = localStorage.getItem('lastSection')||'dashboard'; showSection(last);
             } else { window.location.href='index.html'; }
             document.getElementById('loadingScreen').classList.add('hidden');
         });
 
         function loadAllData(){ const uid=currentUser.uid;
-            database.ref('purchases/'+uid).on('value',s=>{allPurchases=s.val()||{};loadPurchaseList();loadStockList();updateOverview();});
-            database.ref('sales/'+uid).on('value',s=>{allSales=s.val()||{};loadSalesList();loadStockList();loadCustomerList();updateOverview();});
-            database.ref('expenses/'+uid).on('value',s=>{allExpenses=s.val()||{};loadExpenseList();updateOverview();});
-            database.ref('products/'+uid).on('value',s=>{allProducts=s.val()||{};loadStockList();updateSalesProductOptions();});
+            database.ref('purchases/'+uid).on('value',s=>{allPurchases=s.val()||{};loadPurchaseList();loadStockCards();updateOverview();loadAllLists();});
+            database.ref('sales/'+uid).on('value',s=>{allSales=s.val()||{};loadSalesList();loadStockCards();loadCustomerList();updateOverview();loadAllLists();});
+            database.ref('expenses/'+uid).on('value',s=>{allExpenses=s.val()||{};loadExpenseList();updateOverview();loadAllLists();});
+            database.ref('products/'+uid).on('value',s=>{allProducts=s.val()||{};loadStockCards();updateSalesProductOptions();});
             database.ref('customers/'+uid).on('value',s=>{allCustomers=s.val()||{};loadCustomerList();});
         }
 
-        document.getElementById('purchaseForm').addEventListener('submit', async e=>{ e.preventDefault(); const n=document.getElementById('purchaseProductName').value, q=+document.getElementById('purchaseQuantity').value, pp=+document.getElementById('purchasePrice').value, sp=+document.getElementById('purchaseSalePrice').value, sup=document.getElementById('purchaseSupplier').value; await database.ref('purchases/'+currentUser.uid).push().set({productName:n,quantity:q,purchasePrice:pp,salePrice:sp,supplier:sup,total:q*pp,timestamp:firebase.database.ServerValue.TIMESTAMP}); const key=n.toLowerCase().replace(/ /g,'_'); const ref=database.ref('products/'+currentUser.uid+'/'+key); const snap=await ref.once('value'); const d=snap.val()||{stock:0,sold:0}; await ref.set({name:n,stock:(d.stock||0)+q,sold:d.sold||0,purchasePrice:pp,salePrice:sp}); e.target.reset(); showNotification('ক্রয় যোগ হয়েছে','success'); });
+        document.getElementById('purchaseForm').addEventListener('submit', async e=>{ e.preventDefault(); const n=document.getElementById('purchaseProductName').value, q=+document.getElementById('purchaseQuantity').value, pp=+document.getElementById('purchasePrice').value, sp=+document.getElementById('purchaseSalePrice').value, sup=document.getElementById('purchaseSupplier').value; await database.ref('purchases/'+currentUser.uid).push().set({productName:n,quantity:q,purchasePrice:pp,salePrice:sp,supplier:sup,total:q*pp,timestamp:firebase.database.ServerValue.TIMESTAMP}); const key=n.toLowerCase().replace(/ /g,'_'); const ref=database.ref('products/'+currentUser.uid+'/'+key); const snap=await ref.once('value'); const d=snap.val()||{stock:0,sold:0,lastPurchaseDate:null}; await ref.set({name:n,stock:(d.stock||0)+q,sold:d.sold||0,purchasePrice:pp,salePrice:sp,lastPurchaseDate:firebase.database.ServerValue.TIMESTAMP}); e.target.reset(); showNotification('ক্রয় যোগ হয়েছে','success'); });
         function updateSalesProductOptions(){ const sel=document.getElementById('salesProduct'); sel.innerHTML='<option value="">নির্বাচন করুন</option>'; Object.values(allProducts).forEach(p=>{if(p.stock>0)sel.innerHTML+=`<option value="${p.name}" data-stock="${p.stock}" data-price="${p.salePrice}">${p.name} (${p.stock})</option>`;}); }
         function updateSalesPrice(){ const sel=document.getElementById('salesProduct'); const opt=sel.options[sel.selectedIndex]; if(opt.value){document.getElementById('salesPrice').value=opt.dataset.price;document.getElementById('salesStockInfo').value=opt.dataset.stock;} }
         function calculateTotal(){ document.getElementById('salesTotal').value=(+document.getElementById('salesQuantity').value||0)*(+document.getElementById('salesPrice').value||0); }
@@ -464,43 +416,26 @@
         document.getElementById('salesForm').addEventListener('submit', async e=>{ e.preventDefault(); const n=document.getElementById('salesProduct').value,q=+document.getElementById('salesQuantity').value,p=+document.getElementById('salesPrice').value,t=+document.getElementById('salesTotal').value,pay=document.getElementById('salesPayment').value,cname=document.getElementById('salesCustomerName').value,cmob=document.getElementById('salesCustomerMobile').value; const key=n.toLowerCase().replace(/ /g,'_'); const ref=database.ref('products/'+currentUser.uid+'/'+key); const snap=await ref.once('value'); const d=snap.val(); if(!d||d.stock<q){showNotification('স্টক নেই','error');return;} await database.ref('sales/'+currentUser.uid).push().set({productName:n,quantity:q,price:p,total:t,payment:pay,customerName:pay==='due'?cname:'',customerMobile:pay==='due'?cmob:'',dueAmount:pay==='due'?t:0,timestamp:firebase.database.ServerValue.TIMESTAMP}); await ref.update({stock:d.stock-q,sold:(d.sold||0)+q}); if(pay==='due'&&cname){ const ck=cname.toLowerCase().replace(/ /g,'_'); const cref=database.ref('customers/'+currentUser.uid+'/'+ck); const cs=await cref.once('value'); const cd=cs.val()||{totalDue:0}; await cref.set({name:cname,mobile:cmob,totalDue:(cd.totalDue||0)+t}); } e.target.reset(); toggleDueField(); showNotification('বিক্রয় সফল','success'); });
         document.getElementById('expenseForm').addEventListener('submit', async e=>{ e.preventDefault(); await database.ref('expenses/'+currentUser.uid).push().set({description:document.getElementById('expenseDescription').value,amount:+document.getElementById('expenseAmount').value,category:document.getElementById('expenseCategory').value,timestamp:firebase.database.ServerValue.TIMESTAMP}); e.target.reset(); showNotification('খরচ যোগ হয়েছে','success'); });
 
-        function loadPurchaseList(){ document.getElementById('purchaseList').innerHTML=Object.entries(allPurchases).map(([id,p])=>`<tr><td>${getBangladeshTime(p.timestamp)}</td><td>${p.productName}</td><td>${p.quantity}</td><td>৳${p.purchasePrice}</td><td>৳${p.total}</td><td><button class="btn-action btn-delete" onclick="deletePurchase('${id}')"><i class="fas fa-trash"></i></button></td></tr>`).join(''); }
-        function loadSalesList(){ document.getElementById('salesList').innerHTML=Object.entries(allSales).map(([id,s])=>`<tr><td>${getBangladeshTime(s.timestamp)}</td><td>${s.productName}</td><td>${s.quantity}</td><td>৳${s.price}</td><td>৳${s.total}</td><td><span class="badge ${s.payment==='due'?'badge-warning':'badge-success'}">${s.payment==='due'?'বাকি':'পেইড'}</span></td><td><button class="btn-action btn-delete" onclick="deleteSale('${id}')"><i class="fas fa-trash"></i></button></td></tr>`).join(''); }
-        function loadStockList(){ document.getElementById('stockList').innerHTML=Object.entries(allProducts).map(([key,p])=>`<tr><td>${p.name}</td><td><span class="badge ${p.stock>0?'badge-success':'badge-danger'}">${p.stock}</span></td><td>${p.sold||0}</td><td>৳${p.purchasePrice}</td><td>৳${p.salePrice}</td><td><button class="btn-action btn-delete" onclick="deleteProduct('${key}')"><i class="fas fa-trash"></i></button></td></tr>`).join(''); }
+        function loadPurchaseList(){ document.getElementById('purchaseList').innerHTML=Object.entries(allPurchases).sort((a,b)=>b[1].timestamp-a[1].timestamp).map(([id,p])=>`<tr><td>${getBangladeshTime(p.timestamp)}</td><td>${p.productName}</td><td>${p.quantity}</td><td>৳${p.purchasePrice}</td><td>৳${p.total}</td><td><button class="btn-action btn-delete" onclick="deletePurchase('${id}')"><i class="fas fa-trash"></i></button></td></tr>`).join(''); }
+        function loadSalesList(){ document.getElementById('salesList').innerHTML=Object.entries(allSales).sort((a,b)=>b[1].timestamp-a[1].timestamp).map(([id,s])=>`<tr><td>${getBangladeshTime(s.timestamp)}</td><td>${s.productName}</td><td>${s.quantity}</td><td>৳${s.price}</td><td>৳${s.total}</td><td><span class="badge ${s.payment==='due'?'badge-warning':'badge-success'}">${s.payment==='due'?'বাকি':'পেইড'}</span></td><td><button class="btn-action btn-delete" onclick="deleteSale('${id}')"><i class="fas fa-trash"></i></button></td></tr>`).join(''); }
+        function loadExpenseList(){ document.getElementById('expenseList').innerHTML=Object.entries(allExpenses).sort((a,b)=>b[1].timestamp-a[1].timestamp).map(([id,e])=>`<tr><td>${getBangladeshTime(e.timestamp)}</td><td>${e.description}</td><td>${e.category}</td><td>৳${e.amount}</td><td><button class="btn-action btn-delete" onclick="deleteExpense('${id}')"><i class="fas fa-trash"></i></button></td></tr>`).join(''); }
         function loadCustomerList(){ document.getElementById('customerList').innerHTML=Object.entries(allCustomers).map(([key,c])=>`<tr><td>${c.name}</td><td>${c.mobile||'-'}</td><td><span class="badge badge-warning">৳${c.totalDue||0}</span></td><td><button class="btn-action btn-pay" onclick="payDue('${key}')" title="পরিশোধ"><i class="fas fa-hand-holding-usd"></i></button></td></tr>`).join(''); }
-        function loadExpenseList(){ document.getElementById('expenseList').innerHTML=Object.entries(allExpenses).map(([id,e])=>`<tr><td>${getBangladeshTime(e.timestamp)}</td><td>${e.description}</td><td>${e.category}</td><td>৳${e.amount}</td><td><button class="btn-action btn-delete" onclick="deleteExpense('${id}')"><i class="fas fa-trash"></i></button></td></tr>`).join(''); }
+        function loadAllLists(){ const rows=[]; Object.entries(allPurchases).forEach(([id,p])=>rows.push({ts:p.timestamp,type:'ক্রয়',desc:`${p.productName} (${p.quantity})`,amount:`৳${p.total}`})); Object.entries(allSales).forEach(([id,s])=>rows.push({ts:s.timestamp,type:'বিক্রি',desc:`${s.productName} (${s.quantity})`,amount:`৳${s.total}`})); Object.entries(allExpenses).forEach(([id,e])=>rows.push({ts:e.timestamp,type:'খরচ',desc:e.description,amount:`৳${e.amount}`})); rows.sort((a,b)=>b.ts-a.ts); document.getElementById('allListBody').innerHTML=rows.map(r=>`<tr><td>${getBangladeshTime(r.ts)}</td><td><span class="badge ${r.type==='ক্রয়'?'badge-info':r.type==='বিক্রি'?'badge-success':'badge-danger'}">${r.type}</span></td><td>${r.desc}</td><td>${r.amount}</td></tr>`).join(''); }
 
-        async function payDue(key){
-            const amount = prompt('কত টাকা পরিশোধ করবেন?');
-            if(!amount || isNaN(amount)) return;
-            const cust = allCustomers[key]; if(!cust) return;
-            const newDue = Math.max(0,(cust.totalDue||0) - parseFloat(amount));
-            await database.ref('customers/'+currentUser.uid+'/'+key).update({totalDue:newDue});
-            showNotification('পরিশোধ সফল','success');
-        }
+        function loadStockCards(){ const container=document.getElementById('stockCards'); container.innerHTML=''; Object.entries(allProducts).forEach(([key,p])=>{ const lastPurchase=p.lastPurchaseDate?getBangladeshTime(p.lastPurchaseDate):'N/A'; container.innerHTML+=`<div class="stock-card"><div class="flex justify-between items-center mb-3"><h3 style="font-weight:700;">${p.name}</h3><span class="badge ${p.stock>0?'badge-success':'badge-danger'}">${p.stock} স্টক</span></div><div class="mb-2 text-sm">ক্রয় মূল্য: ৳${p.purchasePrice} | বিক্রয়: ৳${p.salePrice}</div><div class="text-xs text-gray-500">সর্বশেষ ক্রয়: ${lastPurchase}</div><div class="text-xs text-gray-500">বিক্রি হয়েছে: ${p.sold||0}</div><div class="flex gap-2 mt-3"><button class="btn btn-primary btn-sm" onclick="quickPurchase('${key}')"><i class="fas fa-cart-plus"></i> ক্রয়</button><button class="btn btn-success btn-sm" onclick="quickSale('${key}')"><i class="fas fa-cash-register"></i> বিক্রি</button><button class="btn btn-danger btn-sm" onclick="deleteProduct('${key}')"><i class="fas fa-trash"></i></button></div></div>`; }); }
+        function filterStockCards(){ const f=document.getElementById('stockSearch').value.toLowerCase(); document.querySelectorAll('.stock-card').forEach(card=>card.style.display=card.textContent.toLowerCase().includes(f)?'':'none'); }
+        function quickPurchase(key){ const p=allProducts[key]; const q=prompt(`কত ${p.name} কিনবেন?`); if(q&&+q>0){ const pp=parseFloat(prompt('ক্রয় মূল্য?')); const sp=parseFloat(prompt('বিক্রয় মূল্য?')); if(pp&&sp){ database.ref('purchases/'+currentUser.uid).push().set({productName:p.name,quantity:+q,purchasePrice:pp,salePrice:sp,total:+q*pp,timestamp:firebase.database.ServerValue.TIMESTAMP}); database.ref('products/'+currentUser.uid+'/'+key).update({stock:p.stock+ +q,lastPurchaseDate:firebase.database.ServerValue.TIMESTAMP,purchasePrice:pp,salePrice:sp}); showNotification('ক্রয় হয়েছে','success'); } } }
+        function quickSale(key){ const p=allProducts[key]; const q=prompt(`কত ${p.name} বিক্রি করবেন?`); if(q&&+q>0 && +q<=p.stock){ const total=+q*p.salePrice; database.ref('sales/'+currentUser.uid).push().set({productName:p.name,quantity:+q,price:p.salePrice,total:total,payment:'cash',timestamp:firebase.database.ServerValue.TIMESTAMP}); database.ref('products/'+currentUser.uid+'/'+key).update({stock:p.stock- +q,sold:(p.sold||0)+ +q}); showNotification('বিক্রি হয়েছে','success'); } else alert('পর্যাপ্ত স্টক নেই'); }
+        async function payDue(key){ const amount=prompt('কত টাকা পরিশোধ?'); if(amount&&!isNaN(amount)){ const c=allCustomers[key]; await database.ref('customers/'+currentUser.uid+'/'+key).update({totalDue:Math.max(0,(c.totalDue||0)-parseFloat(amount))}); showNotification('পরিশোধ সফল','success'); } }
 
-        function updateOverview(){ const now=new Date(); const bd=new Date(now.toLocaleString('en-US',{timeZone:'Asia/Dhaka'})); const today=bd.toDateString(); const yesterday=new Date(bd-86400000).toDateString(); const weekStart=new Date(bd-bd.getDay()*86400000).toDateString(); const monthStart=new Date(bd.getFullYear(),bd.getMonth(),1).toDateString(); let tSales=0,ySales=0,wSales=0,mSales=0,totalSales=0,tPur=0,yPur=0,wPur=0,mPur=0,totalPur=0,tExp=0,yExp=0,wExp=0,mExp=0,totalExp=0,totalDue=0;
-            Object.values(allSales).forEach(s=>{const sd=new Date(new Date(s.timestamp).toLocaleString('en-US',{timeZone:'Asia/Dhaka'})).toDateString(); totalSales+=s.total; if(sd===today)tSales+=s.total; if(sd===yesterday)ySales+=s.total; if(new Date(s.timestamp)>=new Date(weekStart))wSales+=s.total; if(new Date(s.timestamp)>=new Date(monthStart))mSales+=s.total; if(s.payment==='due')totalDue+=s.dueAmount||0;});
-            Object.values(allPurchases).forEach(p=>{const pd=new Date(new Date(p.timestamp).toLocaleString('en-US',{timeZone:'Asia/Dhaka'})).toDateString(); totalPur+=p.total; if(pd===today)tPur+=p.total; if(pd===yesterday)yPur+=p.total; if(new Date(p.timestamp)>=new Date(weekStart))wPur+=p.total; if(new Date(p.timestamp)>=new Date(monthStart))mPur+=p.total;});
-            Object.values(allExpenses).forEach(e=>{const ed=new Date(new Date(e.timestamp).toLocaleString('en-US',{timeZone:'Asia/Dhaka'})).toDateString(); totalExp+=e.amount; if(ed===today)tExp+=e.amount; if(ed===yesterday)yExp+=e.amount; if(new Date(e.timestamp)>=new Date(weekStart))wExp+=e.amount; if(new Date(e.timestamp)>=new Date(monthStart))mExp+=e.amount;});
-            const profit=totalSales-totalPur-totalExp; const html=`<div class="stat-card"><div class="stat-icon" style="background:#e0f2fe;"><i class="fas fa-calendar-day" style="color:#0284c7;"></i></div><div class="stat-info"><h4>আজ বিক্রি</h4><p>৳${tSales.toFixed(2)}</p></div></div>
-            <div class="stat-card"><div class="stat-icon" style="background:#dcfce7;"><i class="fas fa-shopping-cart" style="color:#16a34a;"></i></div><div class="stat-info"><h4>আজ ক্রয়</h4><p>৳${tPur.toFixed(2)}</p></div></div>
-            <div class="stat-card"><div class="stat-icon" style="background:#fee2e2;"><i class="fas fa-receipt" style="color:#dc2626;"></i></div><div class="stat-info"><h4>আজ খরচ</h4><p>৳${tExp.toFixed(2)}</p></div></div>
-            <div class="stat-card"><div class="stat-icon" style="background:#fef3c7;"><i class="fas fa-hand-holding-usd" style="color:#b45309;"></i></div><div class="stat-info"><h4>মোট বাকি</h4><p>৳${totalDue.toFixed(2)}</p></div></div>
-            <div class="stat-card"><div class="stat-icon" style="background:#ede9fe;"><i class="fas fa-chart-line" style="color:#7c3aed;"></i></div><div class="stat-info"><h4>মোট বিক্রি</h4><p>৳${totalSales.toFixed(2)}</p></div></div>
-            <div class="stat-card"><div class="stat-icon" style="background:#fce7f3;"><i class="fas fa-chart-pie" style="color:#be185d;"></i></div><div class="stat-info"><h4>মোট লাভ</h4><p>৳${profit.toFixed(2)}</p></div></div>`;
-            document.getElementById('overviewStats').innerHTML=html; document.getElementById('reportStats').innerHTML=html;
-        }
+        function updateOverview(){ const now=new Date(); const bd=new Date(now.toLocaleString('en-US',{timeZone:'Asia/Dhaka'})); const today=bd.toDateString(); const yesterday=new Date(bd-86400000).toDateString(); const weekStart=new Date(bd-bd.getDay()*86400000).toDateString(); const monthStart=new Date(bd.getFullYear(),bd.getMonth(),1).toDateString(); let tSales=0,totalSales=0,tPur=0,totalPur=0,tExp=0,totalExp=0,totalDue=0; Object.values(allSales).forEach(s=>{totalSales+=s.total; if(new Date(new Date(s.timestamp).toLocaleString('en-US',{timeZone:'Asia/Dhaka'})).toDateString()===today)tSales+=s.total; if(s.payment==='due')totalDue+=s.dueAmount||0;}); Object.values(allPurchases).forEach(p=>{totalPur+=p.total; if(new Date(new Date(p.timestamp).toLocaleString('en-US',{timeZone:'Asia/Dhaka'})).toDateString()===today)tPur+=p.total;}); Object.values(allExpenses).forEach(e=>{totalExp+=e.amount; if(new Date(new Date(e.timestamp).toLocaleString('en-US',{timeZone:'Asia/Dhaka'})).toDateString()===today)tExp+=e.amount;}); const profit=totalSales-totalPur-totalExp; const html=`<div class="stat-card"><div class="stat-icon" style="background:#e0f2fe;"><i class="fas fa-calendar-day" style="color:#0284c7;"></i></div><div class="stat-info"><h4>আজ বিক্রি</h4><p>৳${tSales.toFixed(2)}</p></div></div><div class="stat-card"><div class="stat-icon" style="background:#dcfce7;"><i class="fas fa-shopping-cart" style="color:#16a34a;"></i></div><div class="stat-info"><h4>আজ ক্রয়</h4><p>৳${tPur.toFixed(2)}</p></div></div><div class="stat-card"><div class="stat-icon" style="background:#fee2e2;"><i class="fas fa-receipt" style="color:#dc2626;"></i></div><div class="stat-info"><h4>আজ খরচ</h4><p>৳${tExp.toFixed(2)}</p></div></div><div class="stat-card"><div class="stat-icon" style="background:#fef3c7;"><i class="fas fa-hand-holding-usd" style="color:#b45309;"></i></div><div class="stat-info"><h4>মোট বাকি</h4><p>৳${totalDue.toFixed(2)}</p></div></div><div class="stat-card"><div class="stat-icon" style="background:#ede9fe;"><i class="fas fa-chart-line" style="color:#7c3aed;"></i></div><div class="stat-info"><h4>মোট বিক্রি</h4><p>৳${totalSales.toFixed(2)}</p></div></div><div class="stat-card"><div class="stat-icon" style="background:#fce7f3;"><i class="fas fa-chart-pie" style="color:#be185d;"></i></div><div class="stat-info"><h4>মোট লাভ</h4><p>৳${profit.toFixed(2)}</p></div></div>`; document.getElementById('overviewStats').innerHTML=html; document.getElementById('reportStats').innerHTML=html; }
 
         async function deletePurchase(id){ if(confirm('ডিলিট?')){await database.ref('purchases/'+currentUser.uid+'/'+id).remove();showNotification('ডিলিট হয়েছে','success');} }
         async function deleteSale(id){ if(confirm('ডিলিট?')){await database.ref('sales/'+currentUser.uid+'/'+id).remove();showNotification('ডিলিট হয়েছে','success');} }
         async function deleteExpense(id){ if(confirm('ডিলিট?')){await database.ref('expenses/'+currentUser.uid+'/'+id).remove();showNotification('ডিলিট হয়েছে','success');} }
         async function deleteProduct(key){ if(confirm('ডিলিট?')){await database.ref('products/'+currentUser.uid+'/'+key).remove();showNotification('ডিলিট হয়েছে','success');} }
-        function printItem(t,id){ window.print(); }
-
         function searchTable(inputId,bodyId){ const f=document.getElementById(inputId).value.toLowerCase(); document.querySelectorAll('#'+bodyId+' tr').forEach(r=>r.style.display=r.textContent.toLowerCase().includes(f)?'':'none'); }
 
-        document.getElementById('settingsForm').addEventListener('submit', async e=>{ e.preventDefault(); const name=document.getElementById('settingsName').value, bn=document.getElementById('settingsBusinessName').value, mob=document.getElementById('settingsMobile').value; await database.ref('users/'+currentUser.uid).update({name,businessName:bn,mobileNumber:mob}); document.getElementById('userName').textContent=name; document.getElementById('businessNameDisplay').textContent=bn; showNotification('সেভ হয়েছে','success'); });
         function showNotification(msg,type='info'){ const c=document.createElement('div'); c.className='notification-container'; const icons={success:'fa-check-circle',error:'fa-exclamation-circle',warning:'fa-exclamation-triangle',info:'fa-info-circle'}; const d=document.createElement('div'); d.className='notification'; d.style.borderLeftColor=type==='success'?'#10b981':type==='error'?'#ef4444':type==='warning'?'#f59e0b':'#6d5ef3'; d.innerHTML=`<i class="fas ${icons[type]}" style="color:${type==='success'?'#10b981':type==='error'?'#ef4444':'#6d5ef3'}"></i><span>${msg}</span>`; c.appendChild(d); document.body.appendChild(c); setTimeout(()=>c.remove(),3500); }
         async function logout(){ await auth.signOut(); localStorage.removeItem('userData'); window.location.href='index.html'; }
     </script>
